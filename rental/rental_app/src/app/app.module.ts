@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { ManagePropertiesComponent } from './manage-properties/manage-properties.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { TenantFormComponent } from './manage-tenant/tenant-form/tenant-form.component';
+import {DpDatePickerModule} from 'ng2-date-picker';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,16 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     ManagePropertiesComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    TenantFormComponent,
+    
+     
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserModule
-
+    DpDatePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

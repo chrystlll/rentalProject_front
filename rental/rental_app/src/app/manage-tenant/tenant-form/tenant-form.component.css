@@ -1,0 +1,15 @@
+.formTitle{
+
+    text-align: center;
+    padding: 25px 50px 25px 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.form-row{
+    margin-top: 2%;
+}
+
+.form-validate-button{
+    text-align: center;
+}

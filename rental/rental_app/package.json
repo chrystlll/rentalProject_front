@@ -23,6 +23,7 @@
     "bootstrap-icons": "^1.7.2",
     "bootstrap-sass": "^3.4.1",
     "jquery": "^3.6.0",
+    "ng2-date-picker": "^13.1.1",
     "popper.js": "^1.16.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
