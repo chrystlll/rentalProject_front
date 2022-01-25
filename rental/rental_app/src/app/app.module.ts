@@ -11,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { TenantFormComponent } from './manage-tenant/tenant-form/tenant-form.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {DpDatePickerModule} from 'ng2-date-picker';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DpDatePickerModule
+    DpDatePickerModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit ,ViewChild} from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tenant-form',
@@ -21,8 +22,10 @@ export class TenantFormComponent implements OnInit {
   }
 
   // Management of Form
-  getFormValues(valGender:string, valSurname:string, valFirstName:string, valEmail:string, valPhone:string, valDOB:string){
-    console.warn(valGender, valSurname, valFirstName,valEmail ,valPhone ,valDOB);
+  tenantData:any={};
+  tenantFormSubmit(data:NgForm){
+    console.log(data);
+    this.tenantData=data
   }
 
 }
