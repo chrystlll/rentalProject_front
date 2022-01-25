@@ -21,10 +21,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
     ManagePropertiesComponent,
     HeaderComponent,
     HomeComponent,
-    TenantFormComponent,
-    
-     
-
+    TenantFormComponent
   ],
   imports: [
     BrowserModule,

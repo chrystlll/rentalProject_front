@@ -1,5 +1,4 @@
 import { Component, OnInit ,ViewChild} from '@angular/core';
-import {DatePickerComponent} from 'ng2-date-picker';
 
 @Component({
   selector: 'app-tenant-form',
@@ -9,10 +8,21 @@ import {DatePickerComponent} from 'ng2-date-picker';
 export class TenantFormComponent implements OnInit {
 
 
-  constructor() { }
+  constructor() {     
+  }
 
   ngOnInit(): void {
   }
 
+  // Date Picker properties
+  datePickerConfig ={
+    showWeekNumbers : false,
+    format  : "YYYY-MM-DD"
+  }
+
+  // Management of Form
+  getFormValues(valGender:string, valSurname:string, valFirstName:string, valEmail:string, valPhone:string, valDOB:string){
+    console.warn(valGender, valSurname, valFirstName,valEmail ,valPhone ,valDOB);
+  }
 
 }

@@ -19,5 +19,31 @@ export class ManageTenantComponent implements OnInit {
     this.router.navigate(['/', 'tenantForm']);
   }
 
+  // user example
+
+  users =[
+    {
+      id : 1 , 
+      firstName:"toto",
+      surname: "dupond",
+      email : "toto.dupond@test.com"
+
+    },
+    {
+      id : 2 , 
+      firstName:"tata",
+      surname: "dupand",
+      email : "tata.dupand@test.com"
+
+    },
+    {
+      id : 3 , 
+      firstName:"titi",
+      surname: "dipond",
+      email : "titi.dipond@test.com"
+
+    }
+  ]
+
 
 }
