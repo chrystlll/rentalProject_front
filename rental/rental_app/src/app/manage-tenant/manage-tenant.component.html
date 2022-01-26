@@ -7,14 +7,29 @@
         <th scope="col">Prénom</th>
         <th scope="col">Nom</th>
         <th scope="col">Email</th>
+        <th scope="col"></th>
       </tr>
     </thead>
-    <tbody *ngFor="let user of users">
+    <tbody *ngFor="let user of tenants">
       <tr>
         <th scope="row">{{user.id}}</th>
         <td>{{user.firstName}}</td>
         <td>{{user.surname}}</td>
         <td>{{user.email}}</td>
+        <td>
+          <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="see"(click)="btnSeeTenantDetail(user.id)">
+            <mat-icon><span class="material-icons">
+              visibility
+              </span>
+          </mat-icon>
+          
+          </button>
+          <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="delete" (click)="btnDeleteTenant(user.id)">
+          <mat-icon><span class="material-icons">
+            delete_forever
+            </span></mat-icon>
+        </button>
+      </td>
       </tr>
     </tbody>
   </table>
@@ -22,6 +37,6 @@
 <br>
 <div class="container">
   <div class="row justify-content-end">
-  <div class="col-2"> <button (click)='btnClickTenantForm()'><i class="bi bi-plus-square-fill"></i> Ajouter un locataire</button> </div>
+  <div class="col-2">  <button class="btnAddTenant" (click)='btnClickTenantForm()' mat-flat-button color="accent"><i class="bi bi-plus-square-fill"></i> Ajouter un locataire</button></div>
 </div>
   </div>  

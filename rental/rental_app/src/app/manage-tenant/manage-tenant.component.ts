@@ -1,3 +1,4 @@
+import { isNgTemplate } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./manage-tenant.component.css']
 })
 export class ManageTenantComponent implements OnInit {
+
+  tenant:any;
 
   constructor(private router: Router) { 
 
@@ -19,9 +22,18 @@ export class ManageTenantComponent implements OnInit {
     this.router.navigate(['/', 'tenantForm']);
   }
 
-  // user example
+  btnDeleteTenant(id:number){
+    this.tenants=this.tenants.filter(item=>item.id!==id);
+    alert("Item : " + id  + " is deleted ");
+  }
 
-  users =[
+  btnSeeTenantDetail(tenantId:any){
+    this.router.navigate(['/tenantDetails',tenantId]);
+    
+  }
+
+  // user example
+  tenants =[
     {
       id : 1 , 
       firstName:"toto",

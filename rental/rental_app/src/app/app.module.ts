@@ -12,6 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { TenantFormComponent } from './manage-tenant/tenant-form/tenant-form.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { TenantDetailsComponent } from './manage-tenant/tenant-details/tenant-details.component'; 
 
 @NgModule({
   declarations: [
@@ -22,13 +26,17 @@ import { FormsModule } from '@angular/forms';
     ManagePropertiesComponent,
     HeaderComponent,
     HomeComponent,
-    TenantFormComponent
+    TenantFormComponent,
+    TenantDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DpDatePickerModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
