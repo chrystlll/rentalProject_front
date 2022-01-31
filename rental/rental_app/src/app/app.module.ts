@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManageTenantComponent } from './manage-tenant/manage-tenant.component';
 import { ManageReceiptComponent } from './manage-receipt/manage-receipt.component';
-import { LoginComponent } from './login/login.component';
 import { ManagePropertiesComponent } from './manage-properties/manage-properties.component';
 import { HeaderComponent } from './_components/header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -14,19 +13,28 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { TenantDetailsComponent } from './manage-tenant/tenant-details/tenant-details.component'; 
+import { TenantDetailsComponent } from './manage-tenant/tenant-details/tenant-details.component';
+import { LoginComponent } from './_components/login/login.component';
+import { SignInComponent } from './_components/login/sign-in/sign-in.component';
+import { SignUpComponent } from './_components/login/sign-up/sign-up.component';
+import { NotFoundComponent } from './_components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManageTenantComponent,
     ManageReceiptComponent,
-    LoginComponent,
     ManagePropertiesComponent,
     HeaderComponent,
     HomeComponent,
     TenantFormComponent,
-    TenantDetailsComponent
+    TenantDetailsComponent,
+    LoginComponent,
+    SignInComponent,
+    SignUpComponent,
+    NotFoundComponent
+    
+    
   ],
   imports: [
     BrowserModule,

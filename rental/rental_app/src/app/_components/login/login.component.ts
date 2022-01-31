@@ -9,6 +9,14 @@ export class LoginComponent implements OnInit {
 
   constructor() { }
 
+  email:undefined;
+  password: undefined;
+
+  loginWithCognito(){
+    
+  }
+
+
   ngOnInit(): void {
   }
 
