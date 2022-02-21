@@ -1,6 +1,8 @@
 import { isNgTemplate } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MainTenant } from '../_models/main-tenant.model';
+import { MainTenantServService } from '../_services/main-tenant-serv.service';
 
 @Component({
   selector: 'app-manage-tenant',
@@ -10,9 +12,12 @@ import { Router } from '@angular/router';
 export class ManageTenantComponent implements OnInit {
 
   tenant:any;
+  tenants!: MainTenant[];
+  //item:MainTenant | undefined;
 
-  constructor(private router: Router) { 
-
+  constructor(private router: Router,private mainTenantServ: MainTenantServService) { 
+    this.mainTenantServ.getMainTenants().subscribe(
+      (result: MainTenant[]) =>  this.tenants =result)
   }
 
   ngOnInit(): void {
@@ -22,40 +27,15 @@ export class ManageTenantComponent implements OnInit {
     this.router.navigate(['/', 'tenantForm']);
   }
 
-  btnDeleteTenant(id:number){
-    this.tenants=this.tenants.filter(item=>item.id!==id);
-    alert("Item : " + id  + " is deleted ");
+  btnDeleteTenant(id:string|undefined){
+    //this.tenants=this.tenants.filter(item=>item.id!==id);
+    //alert("Item : " + id  + " is deleted ");
   }
 
   btnSeeTenantDetail(tenantId:any){
     this.router.navigate(['/tenantDetails',tenantId]);
     
   }
-
-  // user example
-  tenants =[
-    {
-      id : 1 , 
-      firstName:"toto",
-      surname: "dupond",
-      email : "toto.dupond@test.com"
-
-    },
-    {
-      id : 2 , 
-      firstName:"tata",
-      surname: "dupand",
-      email : "tata.dupand@test.com"
-
-    },
-    {
-      id : 3 , 
-      firstName:"titi",
-      surname: "dipond",
-      email : "titi.dipond@test.com"
-
-    }
-  ]
-
-
+ 
+  
 }

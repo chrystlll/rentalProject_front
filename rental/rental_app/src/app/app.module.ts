@@ -18,6 +18,12 @@ import { LoginComponent } from './_components/login/login.component';
 import { SignInComponent } from './_components/login/sign-in/sign-in.component';
 import { SignUpComponent } from './_components/login/sign-up/sign-up.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -34,7 +40,6 @@ import { NotFoundComponent } from './_components/not-found/not-found.component';
     SignUpComponent,
     NotFoundComponent
     
-    
   ],
   imports: [
     BrowserModule,
@@ -43,9 +48,22 @@ import { NotFoundComponent } from './_components/not-found/not-found.component';
     FormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatInputModule,        
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule ,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

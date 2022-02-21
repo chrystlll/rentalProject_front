@@ -4,8 +4,8 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Prénom</th>
         <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
         <th scope="col">Email</th>
         <th scope="col"></th>
       </tr>
@@ -13,8 +13,8 @@
     <tbody *ngFor="let user of tenants">
       <tr>
         <th scope="row">{{user.id}}</th>
+        <td>{{user.lastName}}</td>
         <td>{{user.firstName}}</td>
-        <td>{{user.surname}}</td>
         <td>{{user.email}}</td>
         <td>
           <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="see"(click)="btnSeeTenantDetail(user.id)">

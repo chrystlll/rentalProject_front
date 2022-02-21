@@ -10,11 +10,11 @@ import { SignUpComponent } from './_components/login/sign-up/sign-up.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
-  { path: 'sign-up', component: SignUpComponent },
+ // { path: '', pathMatch: 'full', redirectTo: 'login' },
+ // { path: 'login', component: LoginComponent },
+ // { path: 'sign-up', component: SignUpComponent },
   { path: 'tenant', component: ManageTenantComponent },
- // { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'tenantForm', component: TenantFormComponent },
   { path: 'tenantDetails/:tenantId', component: TenantDetailsComponent },
   { path: '**', component: NotFoundComponent }

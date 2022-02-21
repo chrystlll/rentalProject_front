@@ -1,82 +1,90 @@
 <div class="container">
     <div class="formTitle">Ajouter un locataire</div>
 
-<form #tenantForm="ngForm" (submit)="tenantFormSubmit(tenantForm.value)" > 
+<form [formGroup]="newMainTenantForm" (submit)="tenantFormSubmit()" > 
 
         <div class="form-group row form-row">
-            <label class="col-sm-2 col-form-label" for="selectGender">Genre</label>
+            <label class="col-sm-2 col-form-label">* Genre</label>
             <div class="col-sm-10">
-                <select id="selectGender" name="selectGender" ngModel #selectGender>
-                    <option selected="selected">...</option>
-                    <option value="1">Mr</option>
-                    <option value="2">Mme</option>
-                    <option value="3">Autre</option>
+                <select class="formSelect" id="gender" formControlName ="gender">
+                    <option selected value="MR">MR</option>
+                    <option value="MME">MME</option>
+                    <option value="NEUTRE">AUTRE</option>
                 </select>
             </div>
         </div>
 
         <div class="form-group row form-row">
-            <label for="inputSurname" class="col-sm-2 col-form-label">Nom</label>
+            <label class="formMandatoryLabel col-sm-2 col-form-label">* Nom</label>
             <div class="col-sm-10">
-                <input ngModel
-                #inputSurname
-                name="inputSurname"
+                <input [ngModel]="lastName" (ngModelChange)="lastName = $event.toUpperCase()"
+                formControlName="lastName" 
                 type="text"
                 class="form-control"
-                id="inputSurname"
-                placeholder="Dupond"/>
+                placeholder="DUPOND"/>
+                <span class="formSpan" *ngIf="form['lastName'].errors || !form['lastName'].value"> {{isMandatory}}</span>
             </div>
         </div>
-
         <div class="form-group row form-row">
-            <label for="inputFirstName" class="col-sm-2 col-form-label">Prénom</label>
+            <label class="col-sm-2 col-form-label">Prénom</label>
             <div class="col-sm-10">
-                <input ngModel
-                    #inputFirstName
-                    name="inputFirstName"
+                <input [ngModel]="firstName"  (ngModelChange)="firstName = $event.toUpperCase()"
+                    formControlName="firstName" 
                     type="text"
                     class="form-control"
-                    id="inputFirstName"
-                    placeholder="Pierre"/>
+                    placeholder="PIERRE"/>
             </div>
         </div>
 
         <div class="form-group row form-row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+            <label class="formMandatoryLabel col-sm-2 col-form-label">* Email</label>
             <div class="col-sm-10">
-                <input ngModel
-                    #inputEmail
-                    name="inputEmail"
+                <input [ngModel]="email"  (ngModelChange)="email = $event.toUpperCase()"
+                    formControlName="email"
                     type="email"
                     class="form-control"
-                    id="inputEmail"
-                    placeholder="pierre.dupond@gmail.com"/>
+                    placeholder="PIERRE.DUPOND@GMAIL.COM"/>
+                    <span class="formSpan" *ngIf="!form['email'].value">{{isMandatory}}</span>
+                    <br>
+                    <span class="formSpan" *ngIf="form['email'].errors">{{isValidEmail}}</span>
             </div>
         </div>
 
         <div class="form-group row form-row">
-            <label for="inputPhoneNumber" class="col-sm-2 col-form-label">Numéro de téléphone</label>
+            <label  class="col-sm-2 col-form-label">Numéro de téléphone</label>
             <div class="col-sm-10">
-                <input ngModel
-                    #inputPhoneNumber
-                    name="inputPhoneNumber"
+                <input ngModel [maxlength]="10"
+                    formControlName="phoneNumber"
                     type="text"
                     class="form-control"
-                    id="inputPhoneNumber"
-                    placeholder="+33 6 00 00 00 00"/>
+                    placeholder="0600000000"/>
+                <span class="formSpan" *ngIf="form['phoneNumber'].errors">{{isValidPhone}}</span>
+            </div>
+        </div>
+        
+        <div class="form-group row form-row">
+            <label  class="col-sm-2 col-form-label">Numéro de sécurité sociale</label>
+            <div class="col-sm-10">
+                <input formControlName="social"
+                    type="text"
+                    class="form-control"
+                    placeholder="284062901501585" [maxlength]="15"/>
+                    <span class="formSpan"  *ngIf="form['social'].errors">{{isValidSocialNumber}}</span>
             </div>
         </div>
 
         <div class="form-group row form-row">
-            <label for="inputDOB" class="col-sm-2 col-form-label">Date de naissance</label>
+            <label class="col-sm-2 col-form-label">Date de naissance</label>
             <div class="col-sm-10">
-                <dp-date-picker name="inputDOB" ngModel #inputDOB [config]="datePickerConfig"></dp-date-picker>
+                    <input class="formDate" type="date" formControlName="dob" (change)="log($event)">
             </div>
         </div>
-
         <br>
+        
+    <br>
         <div class="row justify-content-center">
-            <button type="submit" class="btn btn-dark col-sm-2 form-validate-button" >Valider</button>
+            <button type="submit" class="btn btn-dark col-sm-2 form-validate-button" 
+            [disabled]=!formStatusValue>Valider</button>
         </div>
       
     </form> 
