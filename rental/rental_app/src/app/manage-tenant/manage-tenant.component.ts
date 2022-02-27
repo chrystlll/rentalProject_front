@@ -1,41 +1,107 @@
-import { isNgTemplate } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MainTenant } from '../_models/main-tenant.model';
-import { MainTenantServService } from '../_services/main-tenant-serv.service';
+import {Router} from '@angular/router';
+import {MainTenant} from '../_models/main-tenant.model';
+import {MainTenantServService} from '../_services/main-tenant-serv.service';
+import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
-@Component({
-  selector: 'app-manage-tenant',
-  templateUrl: './manage-tenant.component.html',
-  styleUrls: ['./manage-tenant.component.css']
-})
-export class ManageTenantComponent implements OnInit {
+@Component(
+    {selector: 'app-manage-tenant', templateUrl: './manage-tenant.component.html', styleUrls: ['./manage-tenant.component.css']}
+)
 
-  tenant:any;
-  tenants!: MainTenant[];
-  //item:MainTenant | undefined;
+export class ManageTenantComponent implements OnInit,
+AfterViewInit {
 
-  constructor(private router: Router,private mainTenantServ: MainTenantServService) { 
-    this.mainTenantServ.getMainTenants().subscribe(
-      (result: MainTenant[]) =>  this.tenants =result)
-  }
+    @ViewChild(MatPaginator)paginator: MatPaginator | any;
 
-  ngOnInit(): void {
-  }
+    public array: any;
+    public displayedColumns = ['', '', '', '', ''];
+    public dataSource: any;
 
-  btnClickTenantForm() {
-    this.router.navigate(['/', 'tenantForm']);
-  }
+    public pageSize = 5;
+    public currentPage = 0;
+    public totalSize = 0;
+    private iterator() {
+        const end = (this.currentPage + 1) * this.pageSize;
+        const start = this.currentPage * this.pageSize;
+        const part = this
+            .array
+            .slice(start, end);
+        this.dataSource = part;
+    }
 
-  btnDeleteTenant(id:string|undefined){
-    //this.tenants=this.tenants.filter(item=>item.id!==id);
-    //alert("Item : " + id  + " is deleted ");
-  }
+    constructor(
+        private router : Router,
+        private mainTenantServ : MainTenantServService
+    ) {
+        this.getArray();
+        this.displayedColumns = [
+            'id',
+            'lastName',
+            'firstName',
+            'email',
+            'statut',
+            'details',
+            'delete'
+        ];
+        this.dataSource = new MatTableDataSource<MainTenant>(this.dataSource);
+    }
 
-  btnSeeTenantDetail(tenantId:any){
-    this.router.navigate(['/tenantDetails',tenantId]);
-    
-  }
- 
-  
+    public handlePage(e : any) {
+        this.currentPage = e.pageIndex;
+        this.pageSize = e.pageSize;
+        this.iterator();
+    }
+
+    ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+    }
+
+    private getArray() {
+        this
+            .mainTenantServ
+            .getMainTenants()
+            .subscribe((response) => {
+                this.dataSource = new MatTableDataSource<MainTenant>(response);
+                this.dataSource.paginator = this.paginator;
+                this.array = response;
+                this.totalSize = this.array.length;
+                this.iterator();
+            });
+    }
+
+    ngOnInit(): void {}
+
+    btnClickTenantForm() {
+        this
+            .router
+            .navigate(['/', 'tenantForm']);
+    }
+
+    btnDeleteTenant(id : number) {
+        console.log(id);
+        this
+            .mainTenantServ
+            .deleteMainTenantById(id)
+            .subscribe((result) => {
+                alert("Le locataire a bien été supprimé.");
+                this.dataSource = this
+                    .dataSource
+                    .filter((item : {
+                        id: number;
+                    }) => item.id !== id);
+                this.getArray();
+                this.ngOnInit();
+            }, (error) => {
+                alert("La suppression est impossible, veuillez réessayer ultérieurement");
+            });
+    }
+
+    btnSeeTenantDetail(tenantId : any) {
+        this
+            .router
+            .navigate(['/tenantDetails', tenantId]);
+
+    }
+
 }

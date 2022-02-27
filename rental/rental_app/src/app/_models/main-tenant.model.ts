@@ -1,8 +1,8 @@
 export class MainTenant {
-   	 id?:string| undefined;
+   	 id?:number | undefined;
 	 firstName?: string |undefined;
 	 lastName?: string;
-	 dob?: string;
+	 dob?: Date;
 	 gender?: string;
 	 email?: string;
 	 socialNumber? : string;

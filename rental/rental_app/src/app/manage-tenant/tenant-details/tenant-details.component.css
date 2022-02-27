@@ -1,0 +1,11 @@
+.mainTenantLeftSect{
+    border-right: 3px solid black;
+}
+
+.mainTenantDetailAddress{
+    height: 50%;
+}
+
+.mainTenantDetailContract{
+    height: 50%;
+}
