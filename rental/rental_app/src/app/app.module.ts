@@ -26,6 +26,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AddressDetailsComponent } from './manage-tenant/address-details/address-details.component';
+import { InProgressComponent } from './_components/in-progress/in-progress.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     LoginComponent,
     SignInComponent,
     SignUpComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AddressDetailsComponent,
+    InProgressComponent
     
   ],
   imports: [

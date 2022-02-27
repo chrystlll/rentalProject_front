@@ -6,7 +6,8 @@ export class MainTenant {
 	 gender?: string;
 	 email?: string;
 	 socialNumber? : string;
-     phoneNumber?: string;
+     phoneNumber1?: string;
+	 phoneNumber2?: string;
 	 mainTenantStatus?:string;
 
 }

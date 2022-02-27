@@ -8,6 +8,8 @@ import { LoginComponent } from './_components/login/login.component';
 
 import { SignUpComponent } from './_components/login/sign-up/sign-up.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
+import { AddressDetailsComponent } from './manage-tenant/address-details/address-details.component';
+import { InProgressComponent } from './_components/in-progress/in-progress.component';
 
 const routes: Routes = [
  // { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'tenantForm', component: TenantFormComponent },
   { path: 'tenantDetails/:tenantId', component: TenantDetailsComponent },
+  { path: 'tenant/addressDetails/:tenantId', component: AddressDetailsComponent },
+  { path: 'inprogress', component: InProgressComponent },
   { path: '**', component: NotFoundComponent }
 
 ];

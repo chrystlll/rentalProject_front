@@ -41,7 +41,7 @@ export class TenantFormComponent implements OnInit {
             gender: new FormControl,
             lastName: new FormControl('', [Validators.required]),
             email: new FormControl('', [Validators.required, Validators.email]),
-            phoneNumber: new FormControl(
+            phoneNumber1: new FormControl(
                 '',
                 [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]+')]
             ),
@@ -100,12 +100,12 @@ export class TenantFormComponent implements OnInit {
                     ?.value
         };
         if (
-            null != this.newMainTenantForm.get("phoneNumber")
+            null != this.newMainTenantForm.get("phoneNumber1")
                 ?.value
         ) {
-            this.mT.phoneNumber = this
+            this.mT.phoneNumber1 = this
                 .newMainTenantForm
-                .get("phoneNumber")
+                .get("phoneNumber1")
                     ?.value
         };
         if (
@@ -136,6 +136,7 @@ export class TenantFormComponent implements OnInit {
                     ?.value
         };
         this.mT.mainTenantStatus = "ACTIF";
+        
 
         if (this.formStatusValue) {
 

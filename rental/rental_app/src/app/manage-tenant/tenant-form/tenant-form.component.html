@@ -54,11 +54,11 @@
             <label  class="col-sm-2 col-form-label">Numéro de téléphone</label>
             <div class="col-sm-10">
                 <input ngModel [maxlength]="10"
-                    formControlName="phoneNumber"
+                    formControlName="phoneNumber1"
                     type="text"
                     class="form-control"
                     placeholder="0600000000"/>
-                <span class="formSpan" *ngIf="form['phoneNumber'].errors">{{isValidPhone}}</span>
+                <span class="formSpan" *ngIf="form['phoneNumber1'].errors">{{isValidPhone}}</span>
             </div>
         </div>
         
