@@ -4,6 +4,7 @@ import {MainTenantServService} from '../_services/main-tenant-serv.service';
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component(
     {selector: 'app-manage-tenant', templateUrl: './manage-tenant.component.html', styleUrls: ['./manage-tenant.component.css']}
@@ -17,7 +18,9 @@ AfterViewInit {
     public array: any;
     public displayedColumns = ['', '', '', '', ''];
     public dataSource: any;
+    searchForm !: FormGroup;
 
+    /** Manage the pagination */
     public pageSize = 5;
     public currentPage = 0;
     public totalSize = 0;
@@ -53,10 +56,6 @@ AfterViewInit {
         this.iterator();
     }
 
-    ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-    }
-
     private getArray() {
         this
             .mainTenantServ
@@ -70,7 +69,15 @@ AfterViewInit {
             });
     }
 
-    ngOnInit(): void {}
+    ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+    }
+
+    ngOnInit(): void {
+        this.searchForm = new FormGroup({
+            searchByName: new FormControl('')
+        });
+    }
 
     btnClickTenantForm() {
         this
@@ -78,6 +85,8 @@ AfterViewInit {
             .navigate(['/', 'tenantForm']);
     }
 
+    /** Delete the current main tenant 
+     */
     btnDeleteTenant(id : number) {
         console.log(id);
         this
@@ -97,11 +106,22 @@ AfterViewInit {
             });
     }
 
+    /** Access to main tenant details component
+     * (tenant-details component)
+     */
     btnSeeTenantDetail(tenantId : any) {
         this
             .router
             .navigate(['/tenantDetails', tenantId]);
 
+    }
+
+    /** Reduce the list of main tenant
+     * input = searchByName input content
+     * CBN: to be implemented
+     */
+    btnSearchMainTenant(){
+        console.log(this.searchForm.controls["searchByName"].value);
     }
 
 }

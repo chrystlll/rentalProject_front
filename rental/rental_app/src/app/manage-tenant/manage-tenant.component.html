@@ -1,73 +1,66 @@
-<br>
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
-
-    
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let user"> {{user.id}} </td>
-    </ng-container>
-
-  
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef> Nom </th>
-      <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
-    </ng-container>
-
-   
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef> Prénom </th>
-      <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
-    </ng-container>
-
-    
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="statut">
-      <th mat-header-cell *matHeaderCellDef> Statut </th>
-      <td mat-cell *matCellDef="let user"> {{user.mainTenantStatus}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="details">
-      <th mat-header-cell *matHeaderCellDef> Détails </th>
-      <td mat-cell *matCellDef="let user"> 
-        <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="see"(click)="btnSeeTenantDetail(user.id)">
-          <mat-icon>
-            <span class="material-icons">visibility</span>
-          </mat-icon>
-        </button>
-    </ng-container>
-
-    
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef> Supprimer </th>
-      <td mat-cell *matCellDef="let user"> 
-        <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="delete" (click)="btnDeleteTenant(user.id)">
-          <mat-icon>
-            <span class="material-icons">delete_forever</span>
-          </mat-icon>
-        </button> 
-    </ng-container>
-
-    
-
-    
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSize"
-  [pageIndex]="currentPage" (page)="handlePage($event)"aria-label="Select page of tenants">
-  </mat-paginator>
-</div>
-
-
-<br>
 <div class="container">
-  <div class="row justify-content">
-  <div class="col-2">  <button class="btnAddTenant" (click)='btnClickTenantForm()' mat-flat-button color="accent"><i class="bi bi-plus-square-fill"></i> Ajouter un locataire</button></div>
+  <div class="row justify-content-between">
+    <div class="col-2">  
+      <button class="btnAddTenant" (click)='btnClickTenantForm()' mat-flat-button color="accent">
+        <i class="bi bi-plus-square-fill"></i> Ajouter un locataire
+      </button>
+    </div>
+    <div class="col-4">
+      <form [formGroup]="searchForm" (submit)="btnSearchMainTenant()" class="input-group">
+        <input type="text" formControlName="searchByName" class="form-control searchInput" placeholder="Nom du locataire" aria-label="Nom du locataire" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary btnAddTenant" type="button" id="button-addon2" type="submit" >Rechercher</button>
+      </form>
+  </div>
+  </div>
+
+<br>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Nom </th>
+        <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> Prénom </th>
+        <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="statut">
+        <th mat-header-cell *matHeaderCellDef> Statut </th>
+        <td mat-cell *matCellDef="let user"> {{user.mainTenantStatus}} </td>
+      </ng-container>
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Détails </th>
+        <td mat-cell *matCellDef="let user"> 
+          <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="see"(click)="btnSeeTenantDetail(user.id)">
+            <mat-icon>
+              <span class="material-icons">visibility</span>
+            </mat-icon>
+          </button>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Supprimer </th>
+        <td mat-cell *matCellDef="let user"> 
+          <button class="btnTenantGrid" mat-mini-fab color="primary" aria-label="delete" (click)="btnDeleteTenant(user.id)">
+            <mat-icon>
+              <span class="material-icons">delete_forever</span>
+            </mat-icon>
+          </button> 
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSize"
+    [pageIndex]="currentPage" (page)="handlePage($event)"aria-label="Select page of tenants">
+    </mat-paginator>
+  </div>
 </div>
+

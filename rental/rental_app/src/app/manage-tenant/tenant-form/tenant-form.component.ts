@@ -20,6 +20,7 @@ export class TenantFormComponent implements OnInit {
     isExist: boolean | undefined;
     isError: boolean | undefined;
 
+    
     // Errors
     isMandatory = 'Ce champs est obligatoire';
     isValidEmail = 'L\' email saisi est invalide';
@@ -186,4 +187,5 @@ export class TenantFormComponent implements OnInit {
           alert("Erreur de saisie. Veuillez vérifier les informations.");
       }
     }
+
 }

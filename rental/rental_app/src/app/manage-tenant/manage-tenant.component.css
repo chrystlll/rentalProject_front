@@ -10,3 +10,7 @@
 table {
     width: 100%;
   }
+
+.searchInput{
+    width: 50%;
+}
