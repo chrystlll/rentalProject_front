@@ -112,8 +112,7 @@ AfterViewInit {
     btnSeeTenantDetail(tenantId : any) {
         this
             .router
-            .navigate(['/tenantDetails', tenantId]);
-
+            .navigate(['/tenantDetails/mainTenantDetails', tenantId]);
     }
 
     /** Reduce the list of main tenant

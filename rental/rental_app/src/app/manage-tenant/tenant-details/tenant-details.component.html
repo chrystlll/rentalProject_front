@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+    <div class="row align-items-start">
+        
+        <div class="navLeft text-white col-3">
+            <hr>
+            <ul class="nav nav-pills flex-column">
+              <li>
+                <a class="nav-link text-white" [routerLink]="['mainTenantDetails', tenantIdFromRoute]" >
+                  <i class="bi bi-info-circle"></i>
+                  Informations générales
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['addressDetails', tenantIdFromRoute]">
+                  <i class="bi bi-house-door"></i>
+                  Adresses
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['contractDetails', tenantIdFromRoute]">
+                  <i class="bi bi-journal"></i>
+                  Contrats
+                </a>
+              </li>
+            </ul>
+            <hr>
+          </div>
+          <div class="b-example-divider col-1"></div>
+          
+        <div class="col-8 detailsSection"><router-outlet></router-outlet></div>
+    </div>
+</div>

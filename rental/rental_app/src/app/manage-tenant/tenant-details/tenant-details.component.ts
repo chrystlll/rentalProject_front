@@ -9,17 +9,14 @@ export class TenantDetailsComponent implements OnInit {
 
     tenantIdFromRoute: any;
 
-    constructor(
-        private route : ActivatedRoute
-    ) {
-        const routeParams = this.route.snapshot.paramMap;
-        this.tenantIdFromRoute = Number(routeParams.get('tenantId'));
+    constructor(private route : ActivatedRoute) {
+        const routeParams = this.route.firstChild.params;
+        routeParams.subscribe(params => {
+            this.tenantIdFromRoute = params['tenantId'];
+
+        })
     }
-    
-        ngOnInit(): void {
-            throw new Error('Method not implemented.');
-        }
-  
 
-}    
+    ngOnInit(): void {}
 
+}

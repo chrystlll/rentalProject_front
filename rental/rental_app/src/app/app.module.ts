@@ -29,6 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { InProgressComponent } from './_components/in-progress/in-progress.component';
 import { MainTenantDetailsComponent } from './manage-tenant/tenant-details/main-tenant-details/main-tenant-details.component';
 import { ContractDetailsComponent } from './manage-tenant/tenant-details/contract-details/contract-details.component';
+import { AddressDetailsComponent } from './manage-tenant/tenant-details/address-details/address-details.component';
+import { TestComponent } from './_test/test/test.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { ContractDetailsComponent } from './manage-tenant/tenant-details/contrac
     NotFoundComponent,
     InProgressComponent,
     MainTenantDetailsComponent,
-    ContractDetailsComponent
+    ContractDetailsComponent,
+    AddressDetailsComponent,
+    TestComponent
     
   ],
   imports: [

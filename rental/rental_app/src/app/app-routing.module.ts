@@ -11,6 +11,7 @@ import {NotFoundComponent} from './_components/not-found/not-found.component';
 import {InProgressComponent} from './_components/in-progress/in-progress.component';
 import {AddressDetailsComponent} from './manage-tenant/tenant-details/address-details/address-details.component';
 import {MainTenantDetailsComponent} from './manage-tenant/tenant-details/main-tenant-details/main-tenant-details.component';
+import { ContractDetailsComponent } from './manage-tenant/tenant-details/contract-details/contract-details.component';
 
 const routes: Routes = [
     // { path: '', pathMatch: 'full', redirectTo: 'login' }, { path: 'login',
@@ -25,15 +26,19 @@ const routes: Routes = [
         path: 'tenantForm',
         component: TenantFormComponent
     }, {
-        path: 'tenantDetails/:tenantId',
+        path: 'tenantDetails',
         component: TenantDetailsComponent,
         children: [
             {
-                path: 'tenantDetails/addressDetails:tenantId',
+                path: 'addressDetails/:tenantId',
                 component: AddressDetailsComponent
             }, {
-                path: 'tenantDetails/mainTenantDetails:tenantId',
+                path: 'mainTenantDetails/:tenantId',
                 component: MainTenantDetailsComponent
+            },
+            {
+                path: 'contractDetails/:tenantId',
+                component: ContractDetailsComponent
             }
         ]
     }, {

@@ -32,16 +32,15 @@ export class MainTenantDetailsComponent implements OnInit {
 
 
   constructor(private route : ActivatedRoute,
-        private router : Router,
         private maintenantService : MainTenantServService,
-        private datePipe : DatePipe) { const routeParams = this.route.snapshot.paramMap;
+        private datePipe : DatePipe) { 
+          const routeParams = this.route.snapshot.paramMap;
           this.tenantIdFromRoute = Number(routeParams.get('tenantId'));
           this.mainTenant = new MainTenant();
           this
               .maintenantService
               .getMainTenantById(this.tenantIdFromRoute)
               .subscribe((response) => {
-                  console.log(response);
                   this.mainTenant = response;
                   this
                       .newMainTenantForm

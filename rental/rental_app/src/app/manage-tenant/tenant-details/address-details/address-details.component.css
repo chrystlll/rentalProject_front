@@ -1,0 +1,17 @@
+table{
+    width: 100%;
+}
+
+.btnAddTenant{
+    background-color: #c2185b;
+    color: #fff;
+}
+
+.addressForm{
+    border: solid #424242 1px;
+    padding: 10px;
+}
+
+.btnClose {
+    margin-right: 10px;
+}
