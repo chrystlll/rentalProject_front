@@ -10,7 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { TenantFormComponent } from './manage-tenant/tenant-form/tenant-form.component';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TenantDetailsComponent } from './manage-tenant/tenant-details/tenant-details.component';
@@ -31,6 +30,8 @@ import { MainTenantDetailsComponent } from './manage-tenant/tenant-details/main-
 import { ContractDetailsComponent } from './manage-tenant/tenant-details/contract-details/contract-details.component';
 import { AddressDetailsComponent } from './manage-tenant/tenant-details/address-details/address-details.component';
 import { TestComponent } from './_test/test/test.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 @NgModule({
   declarations: [
@@ -72,8 +73,10 @@ import { TestComponent } from './_test/test/test.component';
     MatFormFieldModule,
     MatNativeDateModule,
     MatTableModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    AutoCompleteModule
+    
   ],
   providers: [
     MatDatepickerModule

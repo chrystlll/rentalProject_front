@@ -1,1 +1,17 @@
-<p>test works!</p>
+
+<form [formGroup]="newAdressForm" (submit)="adressFormSubmit()">
+<label>Code Postal</label>
+<input formControlName="zipCode" [maxlength]="5" [minLength]="5" (blur)="search($event.target)"/>
+
+<!-- p-autoComplete  [suggestions]="records"
+(completeMethod)="search($event)" placeholder="Code Postal" 
+[forceSelection]="true"></p-autoComplete>-->
+
+
+<label>Ville</label>
+<select formControlName="city">
+    <option [ngValue]="null" disabled>Ville</option>
+    <option *ngFor="let city of records" [ngValue]="city.Nom_commune">{{city.Nom_commune}}</option>
+</select>
+
+</form>
