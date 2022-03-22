@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,9 +32,17 @@ import { AddressDetailsComponent } from './manage-tenant/tenant-details/address-
 import { TestComponent } from './_test/test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AutoCompleteModule} from "primeng/autocomplete";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import {MatSortModule} from '@angular/material/sort'; 
+
+
+registerLocaleData(localeFr);
 
 @NgModule({
+  
   declarations: [
+    
     AppComponent,
     ManageTenantComponent,
     ManageReceiptComponent,
@@ -51,8 +59,7 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     MainTenantDetailsComponent,
     ContractDetailsComponent,
     AddressDetailsComponent,
-    TestComponent
-    
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,10 +82,11 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     MatTableModule,
     MatPaginatorModule,
     BrowserAnimationsModule,
-    AutoCompleteModule
-    
+    AutoCompleteModule,
+    MatSortModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'fr'},
     MatDatepickerModule
   ],
   bootstrap: [AppComponent]

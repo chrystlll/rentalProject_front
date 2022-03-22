@@ -58,6 +58,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: bolder;
 }
 
+
+.btnClose {
+    margin-right: 10px;
+}
+
+.mainTenantForms{
+    border: solid #424242 1px;
+    padding: 10px;
+}
+
 .formDate {
     display: block;
     width: 40%;

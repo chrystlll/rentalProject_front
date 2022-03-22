@@ -13,6 +13,7 @@ import {AddressDetailsComponent} from './manage-tenant/tenant-details/address-de
 import {MainTenantDetailsComponent} from './manage-tenant/tenant-details/main-tenant-details/main-tenant-details.component';
 import { ContractDetailsComponent } from './manage-tenant/tenant-details/contract-details/contract-details.component';
 
+
 const routes: Routes = [
     // { path: '', pathMatch: 'full', redirectTo: 'login' }, { path: 'login',
     // component: LoginComponent }, { path: 'sign-up', component: SignUpComponent },

@@ -1,4 +1,3 @@
-import { MainTenant } from "./main-tenant.model";
 
 export class Address {
     id?:number | undefined;

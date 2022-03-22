@@ -108,24 +108,32 @@ AfterViewInit {
         headerLength : any,
         searchString : string
     ) {
-        let csvArr = [];
+        let csvArr: any[] = [];
+        
         for (let i = 1; i < csvRecordsArray.length; i++) {
-
+            let isExist=undefined;
             let curruntRecord = (csvRecordsArray[i]).split(';');
             let csvRecord: CSVCodePostalRecord = new CSVCodePostalRecord();
             csvRecord.Nom_commune = curruntRecord[1].trim();
             csvRecord.Code_postal = curruntRecord[2].trim();
-            // CBN TO DO NOT INSERT IF Nom_Commune exist in arrayList
             csvArr.push(csvRecord);
+            
         }
         if (!searchString && !searchString.trim()) {
             return of(csvArr);
         } else {
             let wholeCity = [...csvArr];
-            let filterdProducts = wholeCity.filter(
+            let filterdCities = wholeCity.filter(
                 x => x.Code_postal.toLowerCase().indexOf(searchString.toLowerCase()) > -1
             );
-            return of(filterdProducts);
+
+            /** Deduplicate the data by Nom_Commune value */
+            let reduceCity = [...filterdCities];
+            let reducelist = reduceCity.filter(
+                (test, index, array) => index === array.findIndex((findTest) => findTest.Nom_commune === test.Nom_commune)
+            );
+
+            return of(reducelist);
         }
 
     }
@@ -183,7 +191,7 @@ AfterViewInit {
         this.iterator();
     }
 
-    /* CBN : to be implemented*/
+    /* Delete the current address by Id */
     btnDeleteAddress(id : any) {
         console.log(id);
         this
@@ -261,10 +269,8 @@ AfterViewInit {
         this.initForm();
     }
 
-    /* CBN : to be implemented*/
 
     addressFormSubmit() {
-        //CBN control the validators
 
         if('VALID' === this.newAddressForm.status){
         this.address.id = this
