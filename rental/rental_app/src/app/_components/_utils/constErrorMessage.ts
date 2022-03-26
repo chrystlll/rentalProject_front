@@ -1,0 +1,13 @@
+export const isMandatory = 'Ce champ est obligatoire';
+export const isValidEmail = 'L\' email saisi est invalide';
+export const isValidPhone = 'Le format doit être numérique (10 chiffres). ex: 0661844594';
+export const isValidSocialNumber = 'Le format n\'est pas correct.';
+export const isValidDate = 'La date saisie est invalide (DD/MM/AAAA => ex: 30/12/2021).';
+export const contractSaved ='Contrat sauvegardé.';
+export const saveImpossible = 'Sauvegarde Impossible!! Veuillez réessayer ultérieurement';
+export const saveIncomplete = 'Merci de compléter les informations manquantes';
+export const contractDeleted = 'Contrat supprimé.';
+export const saveInfoIncorrect = 'Erreur de saisie. Veuillez vérifier les informations.';
+export const dataSaved = 'Données sauvegardées';
+export const mainTenantDeleted = 'Le locataire a bien été supprimé.';
+export const emailStillExist = 'L\'email existe déjà';

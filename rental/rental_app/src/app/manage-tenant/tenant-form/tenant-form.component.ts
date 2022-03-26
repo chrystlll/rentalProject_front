@@ -3,6 +3,8 @@ import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {MainTenantServService} from 'src/app/_services/main-tenant-serv.service'
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router';
+import Utils from 'src/app/_components/_utils/fctUtils';
+import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
 
 @Component(
     {selector: 'app-tenant-form', templateUrl: './tenant-form.component.html', styleUrls: ['./tenant-form.component.css']}
@@ -22,12 +24,14 @@ export class TenantFormComponent implements OnInit {
 
     
     // Errors
-    isMandatory = 'Ce champs est obligatoire';
-    isValidEmail = 'L\' email saisi est invalide';
-    isValidPhone = 'Le format doit être numérique (10 chiffres). ex: 0661844594';
-    isValidSocialNumber = 'Le format n\'est pas correct.';
-    isValidDate = 'La date saisie est invalide (DD/MM/AAAA => ex: 30/12/2021).';
+    isMandatory = constErrorMessage.isMandatory;
+    isValidEmail = constErrorMessage.isValidEmail
+    isValidPhone = constErrorMessage.isValidPhone
+    isValidSocialNumber = constErrorMessage.isValidSocialNumber
+    isValidDate = constErrorMessage.isValidDate;
     
+    form = Utils.form(this.newMainTenantForm);
+    formStatusValue = Utils.formStatusValue(this.newMainTenantForm, this.formStatus);
     
     constructor(
         private mainTenantServ : MainTenantServService,
@@ -37,7 +41,7 @@ export class TenantFormComponent implements OnInit {
     ngOnInit(): void {
         this.isExist = false;
         this.newMainTenantForm = new FormGroup({
-            firstName: new FormControl('',[Validators.required]),
+            firstName: new FormControl,
             dob: new FormControl,
             gender: new FormControl,
             lastName: new FormControl('', [Validators.required]),
@@ -54,22 +58,7 @@ export class TenantFormComponent implements OnInit {
         });
     };
 
-
-    /* convenience getter for easy access to form fields */
-    get form(): {
-        [key: string]: AbstractControl;
-    } {
-        return this.newMainTenantForm.controls;
-    };
-
-    get formStatusValue() {
-        if ('VALID' === this.newMainTenantForm.status) {
-            this.formStatus = true;
-        } else {
-            this.formStatus = false;
-        }
-        return this.formStatus;
-    }
+    
 
     /* Submit MainTenant Data*/
     tenantFormSubmit() {
@@ -153,39 +142,36 @@ export class TenantFormComponent implements OnInit {
                     this.isExist = result;
                     if (false === this.isExist) {
                         this.mainTenantServ.saveMainTenant(this.mT).subscribe(result => {
-                                alert("Données sauvegardées");
+                                alert(constErrorMessage.dataSaved);
                                 this.router.navigate(['/', 'tenant']);
                             }, error => {
                                 console.error('There was an error!', error.status);
                                 switch (error.status) {
                                     case 0:
                                         {
-                                            alert(
-                                                "Sauvegarde Impossible!! Echec connexion API. Veuillez réessayer ultérieurement"
-                                            );
+                                            alert(constErrorMessage.saveApiError);
                                             break;
                                         }
                                     default:
                                         {
-                                            alert("Sauvegarde Impossible!! Veuillez réessayer ultérieurement");
+                                            alert(constErrorMessage.saveImpossible);
                                             break;
                                         }
                                 }
                             });
                     } else {
-                            alert("L'email existe déjà");
+                            alert(constErrorMessage.emailStillExist);
                         
                     }
                 }, error => {
                   alert(
-                    "Sauvegarde Impossible!! Veuillez réessayer ultérieurement"
+                    constErrorMessage.saveImpossible
                 );})   
 
 
             
         }else {
-          alert("Erreur de saisie. Veuillez vérifier les informations.");
+          alert(constErrorMessage.saveInfoIncorrect);
       }
     }
-
 }

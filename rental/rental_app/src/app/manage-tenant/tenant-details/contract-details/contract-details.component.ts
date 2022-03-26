@@ -1,11 +1,16 @@
+
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Contract } from 'src/app/_models/contract.model';
+import { ContractType } from 'src/app/_models/contractType.model';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
+import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
+import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import Utils, * as utils from 'src/app/_components/_utils/fctUtils';
 
 
 @Component({
@@ -18,31 +23,29 @@ export class ContractDetailsComponent implements OnInit, AfterViewInit  {
 activateEditForm: boolean = false;
 newContractForm !: FormGroup;
 formStatus: boolean = false;
-displayedColumns: string[] = ['startDate', 'endDate', 'contractType'];
+displayedColumns: string[] = ['startDate', 'endDate', 'contractType','contractStatus','details','delete'];
 tenantIdFromRoute: any;
 contract: Contract = new Contract;
 mT: MainTenant = new MainTenant();
 
-@ViewChild(MatSort) sort: MatSort;
 
-isMandatory = 'Ce champ est obligatoire';
-contractTypes = [
-  {"id":"LOGEMENT","name":"LOGEMENT"},
-  {"id":"AUTRE_STOCKAGE","name":"AUTRE STOCKAGE"},
-  {"id":"STOCKAGE_BATEAU","name":"STOCKAGE BATEAU"},
-  {"id":"STOCKAGE_VOITURE","name":"STOCKAGE VOITURE"},
-  {"id":"STOCKAGE_CAMPING_CAR","name":"STOCKAGE CAMPING CAR"},
-  {"id":"STOCKAGE_CARAVANE","name":"STOCKAGE CARAVANE"},
-  {"id":"STOCKAGE_MOTO","name":"STOCKAGE MOTO"}];
+isMandatory = constErrorMessage.isMandatory;
+contractTypes: ContractType[] =[];
 
-  date:Date = new Date();
-  public dataSource: any = [];
+/* Manage the form validity*/
+form = Utils.form(this.newContractForm);
+formStatusValue = Utils.formStatusValue(this.newContractForm,this.formStatus);
 
+date:Date = new Date();
+public dataSource: any = [];
 
-constructor(private contractService : ContractServService, private route : ActivatedRoute,) {
+constructor(private contractService : ContractServService, private contractTypeService : ContractTypeServService, private route : ActivatedRoute,private datePipe: DatePipe) {
   const routeParams = this.route.snapshot.paramMap;
   this.tenantIdFromRoute = Number(routeParams.get('tenantId'));
   this.getArray();
+  this.contractTypeService.getContractTypes().subscribe((response) => {
+    this.contractTypes =response;
+  });
   
 }
 
@@ -50,17 +53,13 @@ ngOnInit():void {
     this.initForm();
 }
 ngAfterViewInit() {
-  this.dataSource.sort = this.sort;
 }
+
 
 /* Get the list of contracts by Main tenant Id */
 getArray() {
-  this
-            .contractService
-            .getContractsByMainTenantId(this.tenantIdFromRoute)
-            .subscribe((response) => {
-                this.dataSource = new MatTableDataSource<Contract>(response);
-            });
+    this.contractService.getContractsByMainTenantId(this.tenantIdFromRoute).subscribe((response) => 
+    { this.dataSource = new MatTableDataSource<Contract>(response); });
 }
 
 
@@ -81,7 +80,8 @@ initForm() {
       { id: new FormControl, 
         startDate: new FormControl('',Validators.required), 
         endDate: new FormControl, 
-        contractType: new FormControl('LOGEMENT',Validators.required)
+        contractType: new FormControl('LOGEMENT',Validators.required),
+        contractStatus: new FormControl('ACTIF',Validators.required)
       })
 }
 
@@ -105,12 +105,7 @@ contractFormSubmit(){
         .newContractForm
         .controls['contractType']
         .value;
-
-        console.log(this
-          .newContractForm
-          .controls['contractType']
-          .value);
-        console.log(this.contract);
+    this.contract.contractStatus = this.newContractForm.controls['contractStatus'].value;
     
     this.mT.id = this.tenantIdFromRoute;
 
@@ -121,42 +116,46 @@ contractFormSubmit(){
             this.getArray();
             this.activateEditForm = false;
             this.ngOnInit();
-            alert("Contrat sauvegardé.");
+            alert(constErrorMessage.contractSaved);
         }, (error) => {
-            alert("Sauvegarde Impossible!! Veuillez réessayer ultérieurement");
+            alert(constErrorMessage.saveImpossible);
         });
     }else{
-        alert("Merci de compléter les informations manquantes");
+        alert(constErrorMessage.saveIncomplete);
     }
 
-}
-
-/* convenience getter for easy access
-      to address form fields (left section)*/
-      get form(): {
-        [key: string]: AbstractControl;
-    } {
-        return this.newContractForm.controls;
-    };
-
-    /* Check the validity of the form */ 
-    get formStatusValue() {
-      if ('VALID' === this.newContractForm.status) {
-          this.formStatus = true;
-      } else {
-          this.formStatus = false;
-      }
-      return this.formStatus;
-  }
+}  
+   
 
   /** Manage the table filter */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  }
+
+  /** Insert into the form the contract values */
+  btnSeeContractDetail(contract:Contract){
+      this.activateEditForm=true;
+      this.newContractForm.controls['startDate'].setValue(this.datePipe.transform(contract.startDate, 'yyyy-MM-dd'));
+      this.newContractForm.controls['endDate'].setValue(this.datePipe.transform(contract.endDate, 'yyyy-MM-dd'));
+      this.newContractForm.controls['contractType'].setValue(contract.contractType);
+      this.newContractForm.controls['id'].setValue(contract.id);
+      this.newContractForm.controls['contractStatus'].setValue(contract.contractStatus)
+  }
+
+  /** Delete the current contract by Id */
+  btnDeleteContract(id:number){
+    this
+    .contractService
+    .deleteContract(id)
+    .subscribe((response) => {
+        alert(constErrorMessage.contractDeleted);
+        this.ngOnInit();
+        this.getArray();
+    }, (error) => {
+        alert(constErrorMessage.saveImpossible);
+    })
   }
   
 }

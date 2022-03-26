@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class MainTenantServService {
+ 
   postUrl = 'http://localhost:8080/api/v1/mainTenant';
   getByUrl ='http://localhost:8080/api/v1/mainTenant/get/';
 
@@ -42,5 +43,9 @@ export class MainTenantServService {
 
   updateMainTenant(mainTenant: MainTenant){
     return this.http.post(this.postUrl + "/post/",mainTenant,httpOptions);
+  }
+
+  getMainTenantByContractId(id: number) {
+    return this.http.get(this.getByUrl + "contractId/" + id);
   }
 }

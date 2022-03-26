@@ -25,6 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .form-row {
     margin-top: 2%;
 }
+
 .form-validate-button {
     background-color: #c2185b;
 }

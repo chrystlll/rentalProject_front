@@ -2,9 +2,10 @@ import {Router} from '@angular/router';
 import {MainTenant} from '../_models/main-tenant.model';
 import {MainTenantServService} from '../_services/main-tenant-serv.service';
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
+import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
 
 @Component(
     {selector: 'app-manage-tenant', templateUrl: './manage-tenant.component.html', styleUrls: ['./manage-tenant.component.css']}
@@ -15,7 +16,7 @@ AfterViewInit {
 
     @ViewChild(MatPaginator)paginator: MatPaginator | any;
 
-    public array: any;
+    
     public displayedColumns = ['', '', '', '', ''];
     public dataSource: any;
     searchForm !: FormGroup;
@@ -24,6 +25,7 @@ AfterViewInit {
     public pageSize = 5;
     public currentPage = 0;
     public totalSize = 0;
+    public array: any;
     private iterator() {
         const end = (this.currentPage + 1) * this.pageSize;
         const start = this.currentPage * this.pageSize;
@@ -93,7 +95,7 @@ AfterViewInit {
             .mainTenantServ
             .deleteMainTenantById(id)
             .subscribe((result) => {
-                alert("Le locataire a bien été supprimé.");
+                alert(constErrorMessage.mainTenantDeleted);
                 this.dataSource = this
                     .dataSource
                     .filter((item : {
@@ -102,7 +104,7 @@ AfterViewInit {
                 this.getArray();
                 this.ngOnInit();
             }, (error) => {
-                alert("La suppression est impossible, veuillez réessayer ultérieurement");
+                alert(constErrorMessage.saveImpossible);
             });
     }
 

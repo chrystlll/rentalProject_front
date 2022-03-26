@@ -15,6 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ContractServService {
+  
 
   postUrl = 'http://localhost:8080/api/v1/contract';
   getByUrl ='http://localhost:8080/api/v1/contract/get/';
@@ -29,6 +30,14 @@ export class ContractServService {
   saveContract(contract:Contract, mt:MainTenant){   
     return this.http.post(this.postUrl,JSON.stringify({
       contract: contract, mainTenant: mt}),httpOptions);
+  }
+
+  deleteContract(id:number){
+    return this.http.delete(this.postUrl + '/' + id);
+  }
+
+  getContractByStatus(status: string) {
+    return this.http.get<any>(this.getByUrl+"status/"+status);
   }
 
 }

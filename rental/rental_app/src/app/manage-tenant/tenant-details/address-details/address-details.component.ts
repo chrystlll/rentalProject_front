@@ -193,7 +193,6 @@ AfterViewInit {
 
     /* Delete the current address by Id */
     btnDeleteAddress(id : any) {
-        console.log(id);
         this
             .addressService
             .deleteAddress(id)

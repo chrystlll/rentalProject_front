@@ -1,91 +1,80 @@
 <div class="container">
-    <!-- Button search + add -->
-    <div class="row justify-content-between">
+    
+    <div class="row justify-content-end">
+        
         <div class="col-2">
             <button
-                class="btnAddTenant"
-                (click)='btnClickTenantForm()'
+                class="form-validate-button"
+                (click)='btnSeeOldContracts()'
                 mat-flat-button="mat-flat-button"
-                color="accent">
+                >
                 <i class="bi bi-plus-square-fill"></i>
-                Ajouter un locataire
+                Voir les contrats inactifs
             </button>
         </div>
-        <div class="col-4">
-            <form
-                [formGroup]="searchForm"
-                (submit)="btnSearchMainTenant()"
-                class="input-group">
-                <input
-                    type="text"
-                    formControlName="searchByName"
-                    class="form-control searchInput"
-                    placeholder="Nom du locataire"
-                    aria-label="Nom du locataire"
-                    aria-describedby="button-addon2"/>
-                <button
-                    class="btn btn-outline-secondary btnAddTenant"
-                    type="submit"
-                    id="button-addon2">Rechercher</button>
-            </form>
-        </div>
     </div>
+
     <br/>
 
-    <!-- Table Main Tenant (all status) -->
-    <div class="mat-elevation-z8">
+    
+    <div class="formTitle">Liste des contrats actifs</div>
+
+    <br/>
+  
+
+   <div class="mat-elevation-z8">
         <table mat-table="mat-table" [dataSource]="dataSource">
-            <ng-container matColumnDef="id">
+            <ng-container matColumnDef="id" >
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
                     ID
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.id}}
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.id}}
                 </td>
             </ng-container>
-            <ng-container matColumnDef="lastName">
+            <ng-container matColumnDef="mainTenant">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
-                    Nom
+                    Nom du locataire
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.lastName}}
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.mainTenantfirstName}}
                 </td>
             </ng-container>
-            <ng-container matColumnDef="firstName">
+            <ng-container matColumnDef="startDate">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
-                    Prénom
+                    Date de début
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.firstName}}
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.startDate | date:'longDate'}}
                 </td>
             </ng-container>
-            <ng-container matColumnDef="email">
+            <ng-container matColumnDef="endDate">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
-                    Email
+                    Date de fin
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.email}}
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.endDate | date:'longDate'}}
                 </td>
             </ng-container>
-            <ng-container matColumnDef="statut">
+            <ng-container matColumnDef="contractType">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
-                    Statut
+                    Type de contrat
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.mainTenantStatus}}
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.contractType}}
                 </td>
             </ng-container>
             <ng-container matColumnDef="details">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
                     Détails
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
+                <td mat-cell="mat-cell" *matCellDef="let contract">
                     <button
                         class="btnTenantGrid"
                         mat-mini-fab="mat-mini-fab"
                         color="primary"
                         aria-label="see"
-                        (click)="btnSeeTenantDetail(user.id)">
+                        (click)="btnSeeContractDetail(contract.id)">
                         <mat-icon>
                             <span class="material-icons">visibility</span>
                         </mat-icon>
@@ -96,13 +85,13 @@
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
                     Supprimer
                 </th>
-                <td mat-cell="mat-cell" *matCellDef="let user">
+                <td mat-cell="mat-cell" *matCellDef="let contract">
                     <button
                         class="btnTenantGrid"
                         mat-mini-fab="mat-mini-fab"
                         color="primary"
                         aria-label="delete"
-                        (click)="btnDeleteTenant(user.id)">
+                        (click)="btnDeleteContract(contract.id)">
                         <mat-icon>
                             <span class="material-icons">delete_forever</span>
                         </mat-icon>
@@ -120,7 +109,7 @@
             [length]="totalSize"
             [pageIndex]="currentPage"
             (page)="handlePage($event)"
-            aria-label="Select page of tenants">
-        </mat-paginator>
+            aria-label="Select page of contracts"></mat-paginator>
     </div>
+    
 </div>

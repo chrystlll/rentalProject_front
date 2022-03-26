@@ -1,0 +1,45 @@
+<div class="container-fluid">
+
+    <div class="row align-items-start">
+        
+        <div class="navLeft text-white col-3">
+            <hr>
+            <ul class="nav nav-pills flex-column">
+              <li>
+                <a class="nav-link text-white" [routerLink]="['contractInfo', contractIdFromRoute]" >
+                  <i class="bi bi-info-circle"></i>
+                  Informations générales
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['price', contractIdFromRoute]" >
+                  <i class="bi bi-currency-euro"></i>
+                  Historique des tarifs
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['payment', contractIdFromRoute]" >
+                  <i class="bi bi-credit-card"></i>
+                  Historique des paiements
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['place', contractIdFromRoute]" >
+                  <i class="bi bi-shop"></i>
+                  Bien associé
+                </a>
+              </li>
+              <li>
+                <a class="nav-link text-white" [routerLink]="['vehicle', contractIdFromRoute]" >
+                  <i class="bi bi-truck"></i>
+                  Véhicules associés
+                </a>
+              </li>
+            </ul>
+            <hr>
+          </div>
+          <div class="b-example-divider col-1"></div>
+          
+        <div class="col-8 detailsSection"><router-outlet></router-outlet></div>
+    </div>
+</div>

@@ -4,6 +4,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
+import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import Utils from 'src/app/_components/_utils/fctUtils';
 
 @Component({
   selector: 'app-main-tenant-details',
@@ -24,11 +26,15 @@ export class MainTenantDetailsComponent implements OnInit {
   formStatus: boolean = false;
   
   // Errors on MainTenant section (left)
-  isMandatory = 'Ce champs est obligatoire';
-  isValidEmail = 'L\' email saisi est invalide';
-  isValidPhone = 'Le format doit être numérique (10 chiffres). ex: 0661844594';
-  isValidSocialNumber = 'Le format n\'est pas correct.';
-  isValidDate = 'La date saisie est invalide (DD/MM/AAAA => ex: 30/12/2021).';
+  isMandatory = constErrorMessage.isMandatory;
+  isValidEmail = constErrorMessage.isValidEmail;
+  isValidPhone = constErrorMessage.isValidPhone;
+  isValidSocialNumber = constErrorMessage.isValidSocialNumber;
+  isValidDate = constErrorMessage.isValidDate;
+
+  // Check form Validity
+  form = Utils.form(this.newMainTenantForm);
+  formStatusValue = Utils.formStatusValue(this.newMainTenantForm,this.formStatus);
 
 
   constructor(private route : ActivatedRoute,
@@ -185,34 +191,13 @@ export class MainTenantDetailsComponent implements OnInit {
                   .maintenantService
                   .updateMainTenant(this.mainTenant)
                   .subscribe((response) => {
-                      alert("Données sauvegardées");
+                      alert(constErrorMessage.dataSaved);
                       this.editableStatus = false;
                   }, (error) => {
-                      alert("Sauvegarde Impossible!! Veuillez réessayer ultérieurement");
+                      alert(constErrorMessage.saveImpossible);
                   });
           } else {
-              alert("Erreur de saisie. Veuillez vérifier les informations.");
+              alert(constErrorMessage.saveInfoIncorrect);
           }
       }
-  
-      /* convenience getter for easy access
-      to mainTenant form fields (left section)*/
-      get form(): {
-          [key: string]: AbstractControl;
-      } {
-          return this.newMainTenantForm.controls;
-      };
-  
-      /* check if the mainTenant form is valid
-      (left section)*/
-      get formStatusValue() {
-          if ('VALID' === this.newMainTenantForm.status) {
-              this.formStatus = true;
-          } else {
-              this.formStatus = false;
-          }
-          return this.formStatus;
-      }
-  
-
 }
