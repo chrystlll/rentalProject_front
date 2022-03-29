@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContractType } from 'src/app/_models/contractType.model';
 import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
-import Utils from 'src/app/_components/_utils/fctUtils';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contract-info',
@@ -17,20 +17,26 @@ export class ContractInfoComponent implements OnInit {
   contractTypes: ContractType[];
 
   isMandatory = constErrorMessage.isMandatory;
-  form = Utils.form(this.newContractForm);
+  contractIdFromRoute: any;
+  
 
-  constructor(private contractTypeServ: ContractTypeServService) { 
+  constructor(private contractTypeServ: ContractTypeServService, private route : ActivatedRoute) { 
+    const routeParams = this.route.snapshot.paramMap;
+    this.contractIdFromRoute = Number(routeParams.get('contractId'));
+
     this.contractTypeServ.getContractTypes().subscribe((response) => {
       this.contractTypes =response;
     });
     this.newContractForm = new FormGroup({
-      id: new FormControl,
+      id: new FormControl(this.contractIdFromRoute),
       startDate: new FormControl('',[Validators.required]),
       endDate: new FormControl(),
       contractStatus: new FormControl('', [Validators.required]),
       contractType: new FormControl
     })
   }
+
+
 
   ngOnInit(): void {
 
@@ -40,4 +46,16 @@ export class ContractInfoComponent implements OnInit {
 
   contractFormSubmit(){
 
-  }}
+  }
+
+  /* convenience getter for easy access
+      to mainTenant form fields (left section)*/
+      get form(): {
+        [key: string]: AbstractControl;
+    } {
+        return this.newContractForm.controls;
+    };
+
+
+  
+  }

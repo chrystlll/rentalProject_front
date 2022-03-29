@@ -10,7 +10,6 @@ import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
 import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
-import Utils, * as utils from 'src/app/_components/_utils/fctUtils';
 
 
 @Component({
@@ -33,8 +32,23 @@ isMandatory = constErrorMessage.isMandatory;
 contractTypes: ContractType[] =[];
 
 /* Manage the form validity*/
-form = Utils.form(this.newContractForm);
-formStatusValue = Utils.formStatusValue(this.newContractForm,this.formStatus);
+/* convenience getter for easy access
+      to mainTenant form fields (left section)*/
+      get form(): {
+        [key: string]: AbstractControl;
+    } {
+        return this.newContractForm.controls;
+    };
+
+    /* check if the form is valid*/
+    get formStatusValue() {
+        if ('VALID' === this.newContractForm.status) {
+            this.formStatus = true;
+        } else {
+            this.formStatus = false;
+        }
+        return this.formStatus;
+    }
 
 date:Date = new Date();
 public dataSource: any = [];

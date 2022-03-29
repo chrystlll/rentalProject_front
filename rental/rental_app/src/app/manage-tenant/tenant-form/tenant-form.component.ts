@@ -3,7 +3,6 @@ import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {MainTenantServService} from 'src/app/_services/main-tenant-serv.service'
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router';
-import Utils from 'src/app/_components/_utils/fctUtils';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
 
 @Component(
@@ -30,17 +29,13 @@ export class TenantFormComponent implements OnInit {
     isValidSocialNumber = constErrorMessage.isValidSocialNumber
     isValidDate = constErrorMessage.isValidDate;
     
-    form = Utils.form(this.newMainTenantForm);
-    formStatusValue = Utils.formStatusValue(this.newMainTenantForm, this.formStatus);
-    
     constructor(
         private mainTenantServ : MainTenantServService,
-        private router : Router
-    ) {}
-
-    ngOnInit(): void {
-        this.isExist = false;
-        this.newMainTenantForm = new FormGroup({
+        private router : Router,
+        
+    ) {
+         // Controls the form validation
+         this.newMainTenantForm = new FormGroup({
             firstName: new FormControl,
             dob: new FormControl,
             gender: new FormControl,
@@ -56,6 +51,12 @@ export class TenantFormComponent implements OnInit {
                     '-9]|9[0-7])$'
                 )])
         });
+    
+    }
+
+    ngOnInit(): void {
+        this.isExist = false;
+        
     };
 
     
@@ -160,18 +161,33 @@ export class TenantFormComponent implements OnInit {
                                 }
                             });
                     } else {
-                            alert(constErrorMessage.emailStillExist);
-                        
+                            alert(constErrorMessage.emailStillExist); 
                     }
                 }, error => {
                   alert(
                     constErrorMessage.saveImpossible
-                );})   
-
-
-            
+                );})               
         }else {
           alert(constErrorMessage.saveInfoIncorrect);
       }
+    }
+
+    /* convenience getter for easy access
+      to mainTenant form fields (left section)*/
+      get form(): {
+        [key: string]: AbstractControl;
+    } {
+        return this.newMainTenantForm.controls;
+    };
+
+    /* check if the form is valid
+    (left section)*/
+    get formStatusValue() {
+        if ('VALID' === this.newMainTenantForm.status) {
+            this.formStatus = true;
+        } else {
+            this.formStatus = false;
+        }
+        return this.formStatus;
     }
 }

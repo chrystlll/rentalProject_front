@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
-import Utils from 'src/app/_components/_utils/fctUtils';
 
 @Component({
   selector: 'app-main-tenant-details',
@@ -32,10 +31,10 @@ export class MainTenantDetailsComponent implements OnInit {
   isValidSocialNumber = constErrorMessage.isValidSocialNumber;
   isValidDate = constErrorMessage.isValidDate;
 
-  // Check form Validity
-  form = Utils.form(this.newMainTenantForm);
-  formStatusValue = Utils.formStatusValue(this.newMainTenantForm,this.formStatus);
 
+  
+
+  
 
   constructor(private route : ActivatedRoute,
         private maintenantService : MainTenantServService,
@@ -119,10 +118,14 @@ export class MainTenantDetailsComponent implements OnInit {
                       '-8][0-9]{2}|9[0-8][0-9]|990)(00[1-9]|0[1-9][0-9]|[1-9][0-9]{2})(0[1-9]|[1-8][0' +
                       '-9]|9[0-7])$'
                   )]),
-              mainTenantStatus: new FormControl
-          });
+              mainTenantStatus: new FormControl()
+              
+          });  
+          
       }
-  
+      
+
+
       /* Update MainTenant Data (left section)
       Note: if the validation form controls are not OK => send error*/
   
@@ -200,4 +203,23 @@ export class MainTenantDetailsComponent implements OnInit {
               alert(constErrorMessage.saveInfoIncorrect);
           }
       }
+
+    /* convenience getter for easy access
+      to mainTenant form fields (left section)*/
+      get form(): {
+        [key: string]: AbstractControl;
+    } {
+        return this.newMainTenantForm.controls;
+    };
+
+    /* check if the form is valid
+    (left section)*/
+    get formStatusValue() {
+        if ('VALID' === this.newMainTenantForm.status) {
+            this.formStatus = true;
+        } else {
+            this.formStatus = false;
+        }
+        return this.formStatus;
+    }
 }

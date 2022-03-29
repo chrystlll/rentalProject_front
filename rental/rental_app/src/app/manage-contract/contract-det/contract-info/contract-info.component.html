@@ -2,19 +2,19 @@
 
 <form [formGroup]="newContractForm" (submit)="contractFormSubmit()">
 
-    <div *ngIf="editableStatus" class="form-group row form-row">
+    <div class="form-group row form-row">
         <label class="col-sm-4 col-form-label">Id</label>
         <div class="col-sm-8">
             <input
-                [readonly]="!editableStatus"
+                [readonly]="true"
                 formControlName="id"
                 type="text"
                 class="form-control"/>
         </div>
     </div>
 
-    <div *ngIf="!editableStatus" class="form-group row form-row">
-        <label class="col-sm-4 col-form-label">Date de début</label>
+    <div class="form-group row form-row">
+        <label class="formMandatoryLabel col-sm-4 col-form-label">* Date de début</label>
         <div class="col-sm-8">
             <input
                 [readonly]="!editableStatus"
@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-group row form-row">
-        <label class="formMandatoryLabel col-sm-4 col-form-label">Date de fin</label>
+        <label class="col-sm-4 col-form-label">Date de fin</label>
         <div class="col-sm-8">
             <input
                 [readonly]="!editableStatus"
@@ -35,64 +35,56 @@
         </div>
     </div>
     <div class="form-group row form-row">
-        <label class="col-sm-4 col-form-label">Statut du contrat</label>
-        <div class="col-sm-8">
-            <select class="form-control" formControlName="contractStatus">
-                <option value="ACTIF">ACTIF</option>
-                <option value="INACTIF">INACTIF</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group row form-row">
-        <label class="formMandatoryLabel col-sm-4 col-form-label">Type de contrat</label>
-        <div class="col-sm-8">
+        <label class="formMandatoryLabel col-sm-4 col-form-label">* Type de contrat</label>
+        <div *ngIf="editableStatus" class="col-sm-8">
             <select class="form-control" formControlName="contractType">
                 <option *ngFor="let contractType of contractTypes" [ngValue]="contractType.id">{{contractType.name}}</option>
             </select>
-
             <span class="formSpan" *ngIf="!form['contractType'].value">
                 {{isMandatory}}
             </span>
-            </div>
         </div>
-        
-            <br>
-                <div *ngIf="editableStatus" class="form-group row form-row">
-                    <label class="col-sm-4 col-form-label">Statut</label>
-                    <div class="col-sm-8">
-                        <select class="formSelect" formControlName="mainTenantStatus">
-                            <option value="ACTIF">Actif</option>
-                            <option value="INACTIF">Inactif</option>
-                        </select>
-                    </div>
-                </div>
+        <div *ngIf="!editableStatus" class="col-sm-8">
+            <input
+                [readonly]="!editableStatus"
+                formControlName="contractType"
+                type="text"
+                class="form-control"/>
+        </div>
+    </div>
 
-                <div *ngIf="!editableStatus" class="form-group row form-row">
-                    <label class="col-sm-4 col-form-label">Statut</label>
-                    <div class="col-sm-8">
-                        <input
-                            [readonly]="!editableStatus"
-                            formControlName="mainTenantStatus"
-                            type="text"
-                            class="form-control"/>
-                    </div>
-                </div>
-                <br>
-                    <div class="row justify-content-center">
-                        <button
-                            *ngIf="!editableStatus"
-                            class="btn btn-dark col-sm-2 form-button"
-                            (click)="editableStatus = true">Editer</button>
-                        <button
-                            class="btn btn-dark col-sm-2 form-button"
-                            *ngIf="editableStatus"
-                            (click)="editableStatus = false">Annuler</button>
-                        <button
-                            
-                            type="submit"
-                            class="btn btn-dark col-sm-2 form-validate-button form-button"
-                            *ngIf="editableStatus">Valider</button>
-                    </div>
+    <br/>
+    <div  class="form-group row form-row">
+        <label class="formMandatoryLabel col-sm-4 col-form-label">* Statut</label>
+        <div *ngIf="editableStatus" class="col-sm-8">
+            <select class="formSelect" formControlName="contractStatus">
+                <option value="ACTIF">Actif</option>
+                <option value="INACTIF">Inactif</option>
+            </select>
+        </div>
+        <div *ngIf="!editableStatus" class="col-sm-8">
+            <input
+                [readonly]="!editableStatus"
+                formControlName="contractStatus"
+                type="text"
+                class="form-control"/>
+        </div>
+    </div>
 
-                </form>
+    <br/>
+        <div class="row justify-content-center">
+            <button
+                *ngIf="!editableStatus"
+                class="btn btn-dark col-sm-2 form-button"
+                (click)="editableStatus = true">Editer</button>
+            <button
+                class="btn btn-dark col-sm-2 form-button"
+                *ngIf="editableStatus"
+                (click)="editableStatus = false">Annuler</button>
+            <button
+                type="submit"
+                class="btn btn-dark col-sm-2 form-validate-button form-button"
+                *ngIf="editableStatus">Valider</button>
+        </div>
+
+    </form>
