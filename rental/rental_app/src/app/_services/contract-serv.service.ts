@@ -40,4 +40,8 @@ export class ContractServService {
     return this.http.get<any>(this.getByUrl+"status/"+status);
   }
 
+  getContractById(id: number) {
+    return this.http.get<any>(this.getByUrl+"id/"+id);
+  }
+
 }

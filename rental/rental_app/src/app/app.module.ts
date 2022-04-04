@@ -41,6 +41,7 @@ import { ContractPriceComponent } from './manage-contract/contract-det/contract-
 import { ContractPaymentComponent } from './manage-contract/contract-det/contract-payment/contract-payment.component';
 import { ContractVehicleComponent } from './manage-contract/contract-det/contract-vehicle/contract-vehicle.component';
 import { ContractPlaceComponent } from './manage-contract/contract-det/contract-place/contract-place.component';
+import { DatePipe } from '@angular/common';
 
 ContractDetailsComponent
 
@@ -100,7 +101,8 @@ registerLocaleData(localeFr);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr'},
-    MatDatepickerModule
+    MatDatepickerModule,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

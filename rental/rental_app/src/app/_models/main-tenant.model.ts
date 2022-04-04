@@ -8,7 +8,7 @@ export class MainTenant {
 	 socialNumber? : string;
      phoneNumber1?: string;
 	 phoneNumber2?: string;
-	 mainTenantStatus?:string;
+	 commonStatus?:string;
 
 }
 

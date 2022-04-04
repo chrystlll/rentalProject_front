@@ -42,7 +42,7 @@ export class ManageContractComponent implements OnInit {
       'details',
       'delete'
   ];
-  //this.dataSource = new MatTableDataSource<Contract>(this.dataSource);
+  
   }
 
   ngOnInit():void {}

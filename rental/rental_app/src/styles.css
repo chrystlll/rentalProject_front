@@ -59,6 +59,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: bolder;
 }
 
+.btnAdd{
+    background-color: #c2185b !important;
+    color: #fff !important;
+}
 
 .btnClose {
     margin-right: 10px;

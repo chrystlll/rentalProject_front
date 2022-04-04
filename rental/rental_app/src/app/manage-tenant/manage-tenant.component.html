@@ -3,7 +3,7 @@
     <div class="row justify-content-between">
         <div class="col-2">
             <button
-                class="btnAddTenant"
+                class="btnAdd"
                 (click)='btnClickTenantForm()'
                 mat-flat-button="mat-flat-button"
                 color="accent">
@@ -24,7 +24,7 @@
                     aria-label="Nom du locataire"
                     aria-describedby="button-addon2"/>
                 <button
-                    class="btn btn-outline-secondary btnAddTenant"
+                    class="btn btn-outline-secondary btnAdd"
                     type="submit"
                     id="button-addon2">Rechercher</button>
             </form>
@@ -72,7 +72,7 @@
                     Statut
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let user">
-                    {{user.mainTenantStatus}}
+                    {{user.commonStatus}}
                 </td>
             </ng-container>
             <ng-container matColumnDef="details">

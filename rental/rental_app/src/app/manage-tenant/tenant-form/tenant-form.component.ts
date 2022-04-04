@@ -126,7 +126,7 @@ export class TenantFormComponent implements OnInit {
                 .get("social")
                     ?.value
         };
-        this.mT.mainTenantStatus = "ACTIF";
+        this.mT.commonStatus = "ACTIF";
         
 
         if (this.formStatusValue) {

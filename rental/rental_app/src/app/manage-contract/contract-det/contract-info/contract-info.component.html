@@ -13,6 +13,8 @@
         </div>
     </div>
 
+    <!-- Start Date => mandatory-->
+
     <div class="form-group row form-row">
         <label class="formMandatoryLabel col-sm-4 col-form-label">* Date de début</label>
         <div class="col-sm-8">
@@ -22,8 +24,14 @@
                 type="date"
                 class="form-control"/>
         </div>
+        <span class="formSpan" *ngIf="!form['startDate'].value">
+            {{isMandatory}}
+        </span>
     </div>
 
+
+    <!-- End Date -->
+    
     <div class="form-group row form-row">
         <label class="col-sm-4 col-form-label">Date de fin</label>
         <div class="col-sm-8">
@@ -34,6 +42,10 @@
                 class="form-control"/>
         </div>
     </div>
+
+
+    <!-- Start Contract Type => mandatory-->
+
     <div class="form-group row form-row">
         <label class="formMandatoryLabel col-sm-4 col-form-label">* Type de contrat</label>
         <div *ngIf="editableStatus" class="col-sm-8">
@@ -52,8 +64,9 @@
                 class="form-control"/>
         </div>
     </div>
+    
+    <!-- Statut => mandatory-->
 
-    <br/>
     <div  class="form-group row form-row">
         <label class="formMandatoryLabel col-sm-4 col-form-label">* Statut</label>
         <div *ngIf="editableStatus" class="col-sm-8">
@@ -61,6 +74,9 @@
                 <option value="ACTIF">Actif</option>
                 <option value="INACTIF">Inactif</option>
             </select>
+            <span class="formSpan" *ngIf="!form['contractStatus'].value">
+                {{isMandatory}}
+            </span>
         </div>
         <div *ngIf="!editableStatus" class="col-sm-8">
             <input

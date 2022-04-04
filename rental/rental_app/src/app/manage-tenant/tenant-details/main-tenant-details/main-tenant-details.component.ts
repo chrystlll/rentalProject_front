@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
@@ -97,8 +97,8 @@ export class MainTenantDetailsComponent implements OnInit {
                       );
                   this
                       .newMainTenantForm
-                      .controls['mainTenantStatus']
-                      .setValue(this.mainTenant.mainTenantStatus);
+                      .controls['commonStatus']
+                      .setValue(this.mainTenant.commonStatus);
               });
       }
   
@@ -118,7 +118,7 @@ export class MainTenantDetailsComponent implements OnInit {
                       '-8][0-9]{2}|9[0-8][0-9]|990)(00[1-9]|0[1-9][0-9]|[1-9][0-9]{2})(0[1-9]|[1-8][0' +
                       '-9]|9[0-7])$'
                   )]),
-              mainTenantStatus: new FormControl()
+                  commonStatus: new FormControl()
               
           });  
           
@@ -166,13 +166,13 @@ export class MainTenantDetailsComponent implements OnInit {
               } else {
                   this.mainTenant.dob = undefined;
               }
-              if (this.newMainTenantForm.controls["mainTenantStatus"].value) {
-                  this.mainTenant.mainTenantStatus = this
+              if (this.newMainTenantForm.controls["commonStatus"].value) {
+                  this.mainTenant.commonStatus = this
                       .newMainTenantForm
-                      .controls['mainTenantStatus']
+                      .controls['commonStatus']
                       .value;
               } else {
-                  this.mainTenant.mainTenantStatus = undefined;
+                  this.mainTenant.commonStatus = undefined;
               }
               if (this.newMainTenantForm.controls["lastName"].value) {
                   this.mainTenant.lastName = this
