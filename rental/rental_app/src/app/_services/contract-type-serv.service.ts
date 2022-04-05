@@ -9,7 +9,7 @@ export class ContractTypeServService {
 
   constructor() { }
 
-  private states: ContractType[]  = [
+  private contractType: ContractType[]  = [
     {"id":"LOGEMENT","name":"LOGEMENT"},
     {"id":"AUTRE_STOCKAGE","name":"AUTRE STOCKAGE"},
     {"id":"STOCKAGE_BATEAU","name":"STOCKAGE BATEAU"},
@@ -19,6 +19,6 @@ export class ContractTypeServService {
     {"id":"STOCKAGE_MOTO","name":"STOCKAGE MOTO"}];
 
    getContractTypes(): Observable<ContractType[]> {
-     return of(this.states);
+     return of(this.contractType);
    }
 }

@@ -42,7 +42,7 @@
                         <span class="formSpan" *ngIf="!form['startDate'].value">
                             {{isMandatory}}
                         </span>
-                        <span class="formSpan" *ngIf="form['startDate'].value > form['endDate'].value">
+                        <span class="formSpan" *ngIf="(form['startDate'].value > form['endDate'].value) && (form['endDate'].value)">
                             {{dateInfError}}
                         </span>
                     </div>
@@ -58,26 +58,43 @@
             </div>
             <div class="col-6">
                 
+                <!-- Amount -->
+
                 <div class="form-group row form-row">
                     <label class="col-sm-4 col-form-label formMandatoryLabel">* Montant</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-4 doubleInput">
                         <input formControlName="amount" type="text" class="form-control"/>
                     </div>
-                    <span class="formSpan" *ngIf="!form['amount'].value">
-                        {{isMandatory}}
-                    </span>
-                </div>
-                <div class="form-group row form-row">
-                    <label class="col-sm-4 col-form-label formMandatoryLabel">* Devise</label>
-                    <div class="col-sm-8">
+                    
+                    <div class="col-sm-3 doubleInput">
                         <select class="form-control" formControlName="currency">
                             <option>€</option>
                         </select>
-                        <span class="formSpan" *ngIf="!form['currency'].value">
-                            {{isMandatory}}
-                        </span>
+                        
                     </div>
+                    <span class="formSpan" *ngIf="!form['amount'].value || !form['currency'].value">
+                        {{isMandatory}}
+                    </span>
                 </div>
+
+                <!-- Duration -->
+
+                <div class="form-group row form-row">
+                    <label class="col-sm-4 col-form-label formMandatoryLabel">* Durée de validité </label>
+                    <div class="col-sm-4 doubleInput">
+                        <input formControlName="durationValue" type="text" class="form-control"/>
+                    </div>
+                    <div class="col-sm-3 doubleInput">
+                        <select class="form-control" formControlName="durationType">
+                            <option *ngFor="let durationType of durationTypes" [value]="durationType.id">{{durationType.name}}</option>
+                        </select>
+                    </div>
+                    <span class="formSpan" *ngIf="!form['durationType'].value || !form['durationValue'].value">
+                        {{isMandatory}}
+                    </span>
+                </div>
+
+
             </div>
         </div>
         <br/>
@@ -132,7 +149,7 @@
         </ng-container>
 
         <!-- Amount -->
-
+        
         <ng-container matColumnDef="amount">
             <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
                 Montant
@@ -150,6 +167,48 @@
             </th>
             <td mat-cell="mat-cell" *matCellDef="let price">
                 {{price.currency}}
+            </td>
+        </ng-container>
+
+        <!-- Duration Value -->
+
+        <ng-container matColumnDef="durationValue">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Durée
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let price">
+                {{price.durationValue}}
+            </td>
+        </ng-container>
+
+        <!-- Duration Type -->
+
+        <ng-container matColumnDef="durationType">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Type de durée
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let price">
+                {{price.durationType}}
+            </td>
+        </ng-container>
+
+        <!-- Edit price-->
+
+        <ng-container matColumnDef="details">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Détails
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let price">
+                <button
+                    class="btnTenantGrid"
+                    mat-mini-fab="mat-mini-fab"
+                    color="primary"
+                    aria-label="see"
+                    (click)="btnSeePriceDetail(price)">
+                    <mat-icon>
+                        <span class="material-icons">visibility</span>
+                    </mat-icon>
+                </button>
             </td>
         </ng-container>
 

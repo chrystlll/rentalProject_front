@@ -7,6 +7,10 @@ import {PriceServService} from 'src/app/_services/price-serv.service';
 import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Contract} from 'src/app/_models/contract.model';
+import {DurationType} from 'src/app/_models/durationType.model';
+import {DurationTypeServService} from 'src/app/_services/duration-type-serv.service';
+import {DatePipe} from '@angular/common';
+import * as validators from 'src/app/_directives/custom-validator.directive';
 
 @Component(
     {selector: 'app-contract-price', templateUrl: './contract-price.component.html', styleUrls: ['./contract-price.component.css']}
@@ -14,7 +18,16 @@ import {Contract} from 'src/app/_models/contract.model';
 export class ContractPriceComponent implements OnInit {
 
     @ViewChild(MatPaginator)paginator: MatPaginator | any;
-    public displayedColumns = ['', '', '', '', ''];
+    public displayedColumns = [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        ''
+    ];
     public dataSource: any;
     price: Price;
     contractIdFromRoute: number;
@@ -22,13 +35,17 @@ export class ContractPriceComponent implements OnInit {
     newPriceForm !: FormGroup;
     formStatus: boolean = false;
     activateEditForm: boolean = false;
+    durationTypes: DurationType[];
 
     isMandatory = constErrorMessage.isMandatory;
     dateInfError = constErrorMessage.dateInfError;
+    endDate: Date;
 
     constructor(
         private priceService : PriceServService,
         private route : ActivatedRoute,
+        private durationTypeServ : DurationTypeServService,
+        private datePipe : DatePipe
     ) {
         const routeParams = this.route.snapshot.paramMap;
         this.contractIdFromRoute = Number(routeParams.get('contractId'));
@@ -39,10 +56,19 @@ export class ContractPriceComponent implements OnInit {
             'endDate',
             'amount',
             'currency',
+            'durationValue',
+            'durationType',
+            'details',
             'delete'
         ];
         this.initForm();
         this.price = new Price();
+        this
+            .durationTypeServ
+            .getDurationType()
+            .subscribe((response) => {
+                this.durationTypes = response;
+            });
     }
 
     ngOnInit(): void {
@@ -99,6 +125,7 @@ export class ContractPriceComponent implements OnInit {
         return this.formStatus;
     }
 
+
     /* Close and initiate the form */
     btnClose() {
         this.activateEditForm = false;
@@ -109,14 +136,40 @@ export class ContractPriceComponent implements OnInit {
     initForm() {
         this.newPriceForm = new FormGroup({
             id: new FormControl,
-            startDate: new FormControl('', [Validators.required]),
+            startDate: new FormControl('', [
+                Validators.required,
+                
+            ]),
             endDate: new FormControl,
             amount: new FormControl('', Validators.required),
-            currency: new FormControl('€', Validators.required)
-        })
+            currency: new FormControl('€', Validators.required),
+            durationType: new FormControl('MOIS', Validators.required),
+            durationValue: new FormControl('', Validators.required)
+        },{ validators: validators.forbiddenDateValidator() }
+        )
+
     }
 
+    /* Initiate the form with the current price information */
+
+    btnSeePriceDetail(price : Price) {
+      
+        this.newPriceForm.controls['startDate'].setValue(this.datePipe.transform(price.startDate, 'yyyy-MM-dd'));
+        this.newPriceForm.controls['endDate'].setValue(this.datePipe.transform(price.endDate, 'yyyy-MM-dd'));
+        this.newPriceForm.controls['amount'].setValue(price.amount);
+        this.newPriceForm.controls['currency'].setValue(price.currency);
+        this.newPriceForm.controls['durationType'].setValue(price.durationType);
+        this.newPriceForm.controls['id'].setValue(price.id);
+        this.newPriceForm.controls['durationValue'].setValue(price.durationValue);
+        this.activateEditForm = true;
+    }
+
+   
+
+    /* Create or update the price entity on DB */
+
     priceFormSubmit() {
+        this.price = new Price();
 
         this.price.id = this
             .newPriceForm
@@ -138,12 +191,19 @@ export class ContractPriceComponent implements OnInit {
             .newPriceForm
             .controls['currency']
             .value;
+        this.price.durationValue = this
+            .newPriceForm
+            .controls['durationValue']
+            .value;
+        this.price.durationType = this
+            .newPriceForm
+            .controls['durationType']
+            .value;
 
-        console.log(this.price.id)
         const contract: Contract = new Contract();
         contract.id = this.contractIdFromRoute;
 
-        if (contract.startDate > contract.endDate && null != contract.endDate ) {
+        if ((this.price.startDate < this.price.endDate && null != this.price.endDate) || this.newPriceForm.controls['endDate'].value == '') {
             this
                 .priceService
                 .savePrice(this.price, contract)
@@ -151,7 +211,7 @@ export class ContractPriceComponent implements OnInit {
                     this.ngOnInit();
                     this.activateEditForm = false;
                 });
-        } 
+        }
     }
 
 }

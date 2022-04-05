@@ -3,5 +3,7 @@ export class Price {
 	startDate?: Date;  
 	endDate?: Date;  
 	amount?: number;  
-	currency?: string;     
+	currency?: string;
+	durationType?:string;
+	durationValue?:number;     
 } 
