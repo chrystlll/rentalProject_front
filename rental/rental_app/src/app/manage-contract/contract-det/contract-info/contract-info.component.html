@@ -70,18 +70,18 @@
     <div  class="form-group row form-row">
         <label class="formMandatoryLabel col-sm-4 col-form-label">* Statut</label>
         <div *ngIf="editableStatus" class="col-sm-8">
-            <select class="formSelect" formControlName="contractStatus">
-                <option value="ACTIF">Actif</option>
-                <option value="INACTIF">Inactif</option>
+            <select class="formSelect" formControlName="commonStatus">
+                <option value="ACTIF">ACTIF</option>
+                <option value="INACTIF">ACTIF</option>
             </select>
-            <span class="formSpan" *ngIf="!form['contractStatus'].value">
+            <span class="formSpan" *ngIf="!form['commonStatus'].value">
                 {{isMandatory}}
             </span>
         </div>
         <div *ngIf="!editableStatus" class="col-sm-8">
             <input
                 [readonly]="!editableStatus"
-                formControlName="contractStatus"
+                formControlName="commonStatus"
                 type="text"
                 class="form-control"/>
         </div>

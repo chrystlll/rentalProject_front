@@ -22,7 +22,7 @@ export class ContractDetailsComponent implements OnInit, AfterViewInit  {
 activateEditForm: boolean = false;
 newContractForm !: FormGroup;
 formStatus: boolean = false;
-displayedColumns: string[] = ['startDate', 'endDate', 'contractType','contractStatus','details','delete'];
+displayedColumns: string[] = ['startDate', 'endDate', 'contractType','commonStatus','details','delete'];
 tenantIdFromRoute: any;
 contract: Contract = new Contract;
 mT: MainTenant = new MainTenant();
@@ -95,7 +95,7 @@ initForm() {
         startDate: new FormControl('',Validators.required), 
         endDate: new FormControl, 
         contractType: new FormControl('LOGEMENT',Validators.required),
-        contractStatus: new FormControl('ACTIF',Validators.required)
+        commonStatus: new FormControl('ACTIF',Validators.required)
       })
 }
 
@@ -119,7 +119,7 @@ contractFormSubmit(){
         .newContractForm
         .controls['contractType']
         .value;
-    this.contract.contractStatus = this.newContractForm.controls['contractStatus'].value;
+    this.contract.commonStatus = this.newContractForm.controls['commonStatus'].value;
     
     this.mT.id = this.tenantIdFromRoute;
 
@@ -155,7 +155,7 @@ contractFormSubmit(){
       this.newContractForm.controls['endDate'].setValue(this.datePipe.transform(contract.endDate, 'yyyy-MM-dd'));
       this.newContractForm.controls['contractType'].setValue(contract.contractType);
       this.newContractForm.controls['id'].setValue(contract.id);
-      this.newContractForm.controls['contractStatus'].setValue(contract.contractStatus)
+      this.newContractForm.controls['commonStatus'].setValue(contract.commonStatus)
   }
 
   /** Delete the current contract by Id */

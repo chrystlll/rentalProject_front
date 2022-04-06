@@ -42,6 +42,7 @@ import { ContractPaymentComponent } from './manage-contract/contract-det/contrac
 import { ContractVehicleComponent } from './manage-contract/contract-det/contract-vehicle/contract-vehicle.component';
 import { ContractPlaceComponent } from './manage-contract/contract-det/contract-place/contract-place.component';
 import { DatePipe } from '@angular/common';
+import { ContractTableComponent } from './manage-contract/contract-table/contract-table.component';
 
 ContractDetailsComponent
 
@@ -73,7 +74,8 @@ registerLocaleData(localeFr);
     ContractPriceComponent,
     ContractPaymentComponent,
     ContractVehicleComponent,
-    ContractPlaceComponent
+    ContractPlaceComponent,
+    ContractTableComponent
   ],
   imports: [
     BrowserModule,

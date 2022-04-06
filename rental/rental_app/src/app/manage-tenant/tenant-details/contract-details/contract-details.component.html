@@ -49,12 +49,12 @@
                     <div class="form-group row form-row">
                         <label class="col-sm-4 col-form-label">* Statut du contrat</label>
                         <div class="col-sm-8">
-                            <select class="form-control" formControlName="contractStatus">
+                            <select class="form-control" formControlName="commonStatus">
                                 <option value="ACTIF">ACTIF</option>
                                 <option value="INACTIF">INACTIF</option>
                             </select>
                         </div>
-                        <span class="formSpan" *ngIf="!form['contractStatus'].value">
+                        <span class="formSpan" *ngIf="!form['commonStatus'].value">
                             {{isMandatory}}
                         </span>
                     </div>
@@ -152,14 +152,14 @@
             </ng-container>
 
             <!-- Contract Status Column -->
-            <ng-container matColumnDef="contractStatus">
+            <ng-container matColumnDef="commonStatus">
                 <th
                     mat-header-cell 
                     *matHeaderCellDef  >
                     Statut du contrat
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
-                    {{dataSource.contractStatus}}
+                    {{dataSource.commonStatus}}
                 </td>
             </ng-container>
 

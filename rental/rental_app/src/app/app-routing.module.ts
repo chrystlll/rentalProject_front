@@ -19,6 +19,7 @@ import { ContractPriceComponent } from './manage-contract/contract-det/contract-
 import { ContractPaymentComponent } from './manage-contract/contract-det/contract-payment/contract-payment.component';
 import { ContractVehicleComponent } from './manage-contract/contract-det/contract-vehicle/contract-vehicle.component';
 import { ContractPlaceComponent } from './manage-contract/contract-det/contract-place/contract-place.component';
+import { ContractTableComponent } from './manage-contract/contract-table/contract-table.component';
 
 const routes: Routes = [
     // { path: '', pathMatch: 'full', redirectTo: 'login' }, { path: 'login',
@@ -50,7 +51,13 @@ const routes: Routes = [
     },
     {
         path: 'contract',
-        component: ManageContractComponent
+        component: ManageContractComponent,
+        children: [
+            {
+                path: 'contractTable/:contractStatus',
+                component: ContractTableComponent
+            }
+        ]
     },
     {
         path: 'contractDet',

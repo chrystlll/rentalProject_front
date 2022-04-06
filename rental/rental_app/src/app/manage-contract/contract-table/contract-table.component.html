@@ -1,0 +1,91 @@
+<div class="mat-elevation-z8">
+        <table mat-table="mat-table" [dataSource]="dataSource">
+            <ng-container matColumnDef="id" >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    ID
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.id}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="mainTenant">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Nom du locataire
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.mainTenantfirstName}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="startDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Date de début
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.startDate | date:'longDate'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="endDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Date de fin
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.endDate | date:'longDate'}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="contractType">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Type de contrat
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    {{contract.contractType}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="details">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Détails
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    <button
+                        class="btnTenantGrid"
+                        mat-mini-fab="mat-mini-fab"
+                        color="primary"
+                        aria-label="see"
+                        (click)="btnSeeContractDetail(contract.id)">
+                        <mat-icon>
+                            <span class="material-icons">visibility</span>
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                    Supprimer
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let contract">
+                    <button
+                        class="btnTenantGrid"
+                        mat-mini-fab="mat-mini-fab"
+                        color="primary"
+                        aria-label="delete"
+                        (click)="btnDeleteContract(contract.id)">
+                        <mat-icon>
+                            <span class="material-icons">delete_forever</span>
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator
+            #paginator
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 20]"
+            [showFirstLastButtons]="true"
+            [length]="totalSize"
+            [pageIndex]="currentPage"
+            (page)="handlePage($event)"
+            aria-label="Select page of contracts"></mat-paginator>
+    </div>
+
+

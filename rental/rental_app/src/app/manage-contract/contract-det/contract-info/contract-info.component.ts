@@ -54,10 +54,10 @@ export class ContractInfoComponent implements OnInit {
                       );
                   this
                       .newContractForm
-                      .controls['contractStatus']
+                      .controls['commonStatus']
                       .setValue(
                           this.contract
-                              ?.contractStatus
+                              ?.commonStatus
                       );
                   
                       this
@@ -78,7 +78,7 @@ export class ContractInfoComponent implements OnInit {
       id: new FormControl(this.contractIdFromRoute),
       startDate: new FormControl('',[Validators.required]),
       endDate: new FormControl(),
-      contractStatus: new FormControl('', [Validators.required]),
+      commonStatus: new FormControl('', [Validators.required]),
       contractType: new FormControl('', [Validators.required])
     })
     
@@ -107,13 +107,13 @@ export class ContractInfoComponent implements OnInit {
           this.contract.endDate = undefined;
       }
 
-      if (this.newContractForm.controls["contractStatus"].value) {
-          this.contract.contractStatus = this
+      if (this.newContractForm.controls["commonStatus"].value) {
+          this.contract.commonStatus = this
               .newContractForm
-              .controls['contractStatus']
+              .controls['commonStatus']
               .value;
       } else {
-          this.contract.contractStatus = undefined;
+          this.contract.commonStatus = undefined;
       }
       if (this.newContractForm.controls["contractType"].value) {
           this.contract.contractType = this

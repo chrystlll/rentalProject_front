@@ -3,6 +3,6 @@ export class Contract {
     startDate?:Date;
     endDate?:Date;
     contractType?:string;
-    contractStatus?:string;
+    commonStatus?:string;
     mainTenantfirstName?:string;
 }
