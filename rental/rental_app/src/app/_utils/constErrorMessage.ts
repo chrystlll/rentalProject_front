@@ -11,6 +11,7 @@ export const saveInfoIncorrect = 'Erreur de saisie. Veuillez vérifier les infor
 export const dataSaved = 'Données sauvegardées';
 export const mainTenantDeleted = 'Le locataire a bien été supprimé.';
 export const priceDeleted = 'Le montant a bien été supprimé.';
+export const adressDeleted = 'Adresse supprimée';
 export const emailStillExist = 'L\'email existe déjà';
 export const saveApiError = 'Sauvegarde Impossible!! Echec connexion API. Veuillez réessayer ultérieurement';
 export const dateInfError = 'Les dates saisies sont incorrectes.';

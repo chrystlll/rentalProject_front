@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContractType } from 'src/app/_models/contractType.model';
 import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 import { ActivatedRoute } from '@angular/router';
 import { Contract } from 'src/app/_models/contract.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';

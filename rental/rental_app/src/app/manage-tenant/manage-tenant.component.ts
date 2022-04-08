@@ -5,7 +5,7 @@ import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 @Component(
     {selector: 'app-manage-tenant', templateUrl: './manage-tenant.component.html', styleUrls: ['./manage-tenant.component.css']}

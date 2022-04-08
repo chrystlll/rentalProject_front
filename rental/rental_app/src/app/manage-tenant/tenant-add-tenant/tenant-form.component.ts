@@ -3,7 +3,7 @@ import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {MainTenantServService} from 'src/app/_services/main-tenant-serv.service'
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 @Component(
     {selector: 'app-tenant-form', templateUrl: './tenant-form.component.html', styleUrls: ['./tenant-form.component.css']}

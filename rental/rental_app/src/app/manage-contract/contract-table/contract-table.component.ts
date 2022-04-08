@@ -6,7 +6,7 @@ import { Contract } from 'src/app/_models/contract.model';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 @Component({
   selector: 'app-contract-table',

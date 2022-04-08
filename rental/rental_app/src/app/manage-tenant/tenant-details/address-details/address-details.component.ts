@@ -9,6 +9,7 @@ import {CSVCodePostalRecord} from 'src/app/_models/csv-code-postal.model';
 import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {AddressServService} from 'src/app/_services/address-serv.service';
 import {ReadCSVServService} from 'src/app/_services/read-csvserv.service';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 @Component(
     {selector: 'app-address-details', templateUrl: './address-details.component.html', styleUrls: ['./address-details.component.css']}
@@ -17,7 +18,6 @@ export class AddressDetailsComponent implements OnInit,
 AfterViewInit {
 
     @ViewChild(MatPaginator)paginator: MatPaginator | any;
-
     newAddressForm !: FormGroup;
     editableStatus: boolean = false;
     address1: string;
@@ -57,7 +57,7 @@ AfterViewInit {
     private _csvURL = 'assets/document/laposte_hexasmal.csv';
     currentItem: any;
 
-    isMandatory = 'Ce champs est obligatoire';
+    isMandatory = constErrorMessage.isMandatory;
 
     constructor(
         private route : ActivatedRoute,
@@ -197,11 +197,11 @@ AfterViewInit {
             .addressService
             .deleteAddress(id)
             .subscribe((response) => {
-                alert("Adresse supprimée.");
+                alert(constErrorMessage.adressDeleted);
                 this.ngOnInit();
                 this.getArray();
             }, (error) => {
-                alert("Sauvegarde Impossible!! Veuillez réessayer ultérieurement");
+                alert(constErrorMessage.saveImpossible);
             })
     }
 
@@ -270,7 +270,6 @@ AfterViewInit {
 
 
     addressFormSubmit() {
-
         if('VALID' === this.newAddressForm.status){
         this.address.id = this
             .newAddressForm
@@ -309,12 +308,12 @@ AfterViewInit {
                 this.getArray();
                 this.activateEditForm = false;
                 this.ngOnInit();
-                alert("Addresse sauvegardée.");
+                alert(constErrorMessage.dataSaved);
             }, (error) => {
-                alert("Sauvegarde Impossible!! Veuillez réessayer ultérieurement");
+                alert(constErrorMessage.saveImpossible);
             });
         }else{
-            alert("Merci de compléter les informations manquantes");
+            alert(constErrorMessage.saveIncomplete);
         }
     }
 

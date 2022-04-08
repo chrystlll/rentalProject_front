@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute } from '@angular/router';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 @Component({
   selector: 'app-main-tenant-details',
@@ -31,10 +31,6 @@ export class MainTenantDetailsComponent implements OnInit {
   isValidSocialNumber = constErrorMessage.isValidSocialNumber;
   isValidDate = constErrorMessage.isValidDate;
 
-
-  
-
-  
 
   constructor(private route : ActivatedRoute,
         private maintenantService : MainTenantServService,

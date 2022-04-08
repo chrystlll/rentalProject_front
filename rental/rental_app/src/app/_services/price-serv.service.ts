@@ -2,14 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Contract } from '../_models/contract.model';
 import { Price } from '../_models/price.model';
-
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Access-Control-Allow-Origin':  'http://localhost:8080/'
-  })
-};
+import * as serviceUtils from 'src/app/_utils/servicesUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +25,7 @@ export class PriceServService {
   savePrice(price:Price, contract:Contract){   
     return this.http.post(this.postUrl,JSON.stringify({
     price: price,
-    contract: contract}),httpOptions);
+    contract: contract}),serviceUtils.httpOptions);
   }
 
 }

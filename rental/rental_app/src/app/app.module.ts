@@ -6,7 +6,7 @@ import { ManageTenantComponent } from './manage-tenant/manage-tenant.component';
 import { ManagePropertiesComponent } from './manage-properties/manage-properties.component';
 import { HeaderComponent } from './_components/header/header.component';
 import { HomeComponent } from './home/home.component';
-import { TenantFormComponent } from './manage-tenant/tenant-form/tenant-form.component';
+import { TenantFormComponent } from './manage-tenant/tenant-add-tenant/tenant-form.component';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';

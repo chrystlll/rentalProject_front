@@ -72,7 +72,7 @@
         <div *ngIf="editableStatus" class="col-sm-8">
             <select class="formSelect" formControlName="commonStatus">
                 <option value="ACTIF">ACTIF</option>
-                <option value="INACTIF">ACTIF</option>
+                <option value="INACTIF">INACTIF</option>
             </select>
             <span class="formSpan" *ngIf="!form['commonStatus'].value">
                 {{isMandatory}}

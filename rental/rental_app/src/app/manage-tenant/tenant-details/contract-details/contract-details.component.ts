@@ -9,7 +9,7 @@ import { ContractType } from 'src/app/_models/contractType.model';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
 import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 
 
 @Component({

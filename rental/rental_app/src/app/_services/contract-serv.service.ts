@@ -3,13 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contract } from '../_models/contract.model';
 import { MainTenant } from '../_models/main-tenant.model';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Access-Control-Allow-Origin':  'http://localhost:8080/'
-  })
-};
+import * as serviceUtils from 'src/app/_utils/servicesUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +23,7 @@ export class ContractServService {
 
   saveContract(contract:Contract, mt:MainTenant){   
     return this.http.post(this.postUrl,JSON.stringify({
-      contract: contract, mainTenant: mt}),httpOptions);
+      contract: contract, mainTenant: mt}),serviceUtils.httpOptions);
   }
 
   deleteContract(id:number){

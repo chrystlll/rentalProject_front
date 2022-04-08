@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ManageTenantComponent} from './manage-tenant/manage-tenant.component';
 import {HomeComponent} from './home/home.component';
-import {TenantFormComponent} from './manage-tenant/tenant-form/tenant-form.component';
+import {TenantFormComponent} from './manage-tenant/tenant-add-tenant/tenant-form.component';
 import {TenantDetailsComponent} from './manage-tenant/tenant-details/tenant-details.component';
 import {LoginComponent} from './_components/login/login.component';
 

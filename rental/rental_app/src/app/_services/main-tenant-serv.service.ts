@@ -2,13 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders , HttpClientModule } from '@angular/common/http';
 import { MainTenant } from '../_models/main-tenant.model';
 import { Observable } from 'rxjs/internal/Observable';
-
- const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Access-Control-Allow-Origin':  'http://localhost:8080/'
-  })
-}; 
+import * as serviceUtils from 'src/app/_utils/servicesUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +20,7 @@ export class MainTenantServService {
   }
 
   saveMainTenant(mainTenant: MainTenant){   
-   return this.http.post(this.postUrl,mainTenant,httpOptions);
+   return this.http.post(this.postUrl,mainTenant,serviceUtils.httpOptions);
   }
 
   getMainTenantByEmail(email : String){
@@ -42,7 +36,7 @@ export class MainTenantServService {
   }
 
   updateMainTenant(mainTenant: MainTenant){
-    return this.http.post(this.postUrl + "/post/",mainTenant,httpOptions);
+    return this.http.post(this.postUrl + "/post/",mainTenant,serviceUtils.httpOptions);
   }
 
   getMainTenantByContractId(id: number) {

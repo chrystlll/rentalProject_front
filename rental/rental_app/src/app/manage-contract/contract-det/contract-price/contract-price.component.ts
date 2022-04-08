@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {Price} from 'src/app/_models/price.model';
 import {PriceServService} from 'src/app/_services/price-serv.service';
-import * as constErrorMessage from 'src/app/_components/_utils/constErrorMessage';
+import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Contract} from 'src/app/_models/contract.model';
 import {DurationType} from 'src/app/_models/durationType.model';
@@ -39,7 +39,7 @@ export class ContractPriceComponent implements OnInit {
 
     isMandatory = constErrorMessage.isMandatory;
     dateInfError = constErrorMessage.dateInfError;
-    endDate: Date;
+    
 
     constructor(
         private priceService : PriceServService,
@@ -86,10 +86,6 @@ export class ContractPriceComponent implements OnInit {
                 this.ngOnInit();
             })
     }
-
-    /**  Edit the current price
-  */
-    btnEditPrice(id : number) {}
 
     btnClickActivateForm() {
         this.activateEditForm = true;
@@ -203,7 +199,7 @@ export class ContractPriceComponent implements OnInit {
         const contract: Contract = new Contract();
         contract.id = this.contractIdFromRoute;
 
-        if ((this.price.startDate < this.price.endDate && null != this.price.endDate) || this.newPriceForm.controls['endDate'].value == '') {
+        if ((this.price.startDate < this.price.endDate && null != this.price.endDate) || this.newPriceForm.controls['endDate'].value == '' || this.newPriceForm.controls['endDate'].value == null ) {
             this
                 .priceService
                 .savePrice(this.price, contract)

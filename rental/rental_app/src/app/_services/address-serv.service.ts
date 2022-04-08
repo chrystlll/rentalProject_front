@@ -3,14 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Address } from '../_models/address.model';
 import { MainTenant } from '../_models/main-tenant.model';
+import * as serviceUtils from 'src/app/_utils/servicesUtils';
 
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Access-Control-Allow-Origin':  'http://localhost:8080/'
-  })
-};
   
 @Injectable({
   providedIn: 'root'
@@ -31,7 +25,7 @@ export class AddressServService {
   saveAddress(add:Address, mt:MainTenant){   
       return this.http.post(this.postUrl,JSON.stringify({
       address: add,
-      mainTenant: mt}),httpOptions);
+      mainTenant: mt}),serviceUtils.httpOptions);
   }
 
   deleteAddress(id:Number){

@@ -1,1 +1,218 @@
-<p>contract-payment works!</p>
+<div class="formDetailsTitle">Historique des paiements</div>
+
+<div class="container">
+
+    <!-- Button -->
+
+    <div class="row justify-content-between">
+        <div class="col-2">
+            <button
+                class="btnAdd"
+                (click)='btnClickActivateForm()'
+                mat-flat-button="mat-flat-button"
+                color="accent">
+                <i class="bi bi-plus-square-fill"></i>
+                Ajouter un montant
+            </button>
+        </div>
+    </div>
+    <br/>
+
+    <!-- Form -->
+
+    <div class="mainTenantForms" *ngIf="activateEditForm">
+        <div class="btnClose row justify-content-end">
+            <button type="button" class="btn-close" aria-label="Close" (click)="btnClose()"></button>
+
+        </div>
+        <form [formGroup]="newPaymentForm" (submit)="paymentFormSubmit()">
+            <div class="row">
+
+                <!-- ID-->
+
+                <div class="col-6">
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Id</label>
+                        <div class="col-sm-8">
+                            <input formControlName="id" type="text" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <!-- Date de début-->
+
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de début</label>
+                        <div class="col-sm-8">
+                            <input formControlName="startDate" type="date" class="form-control"/>
+                            <span class="formSpan" *ngIf="!form['startDate'].value">
+                                {{isMandatory}}
+                            </span>
+                            <span
+                                class="formSpan"
+                                *ngIf="(form['startDate'].value > form['endDate'].value) && (form['endDate'].value)">
+                                {{dateInfError}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- End Date-->
+
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Date de fin</label>
+                        <div class="col-sm-8">
+                            <input formControlName="endDate" type="date" class="form-control"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+
+                    <!-- Payment Date -->
+
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de paiement</label>
+                        <div class="col-sm-8">
+                            <input formControlName="paymentDate" type="date" class="form-control"/>
+                        </div>
+                        <span class="formSpan" *ngIf="!form['paymentDate'].value">
+                            {{isMandatory}}
+                        </span>
+                    </div>
+
+                    <!-- Payment Type -->
+
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Type de paiement
+                        </label>
+                        <div class="col-sm-8">
+                            <select class="formSelect" formControlName="paymentType">
+                                <option value="ESPECE">ESPECE</option>
+                                <option value="CHEQUE">CHEQUE</option>
+                                <option value="CB">CB</option>
+                                <option value="VIREMENT">VIREMENT</option>
+                            </select>
+                        </div>
+                        <span class="formSpan" *ngIf="!form['paymentType'].value">
+                            {{isMandatory}}
+                        </span>
+                    </div>
+                    
+
+                </div>
+            </div>
+            <br/>
+            <div class="row justify-content-center">
+                <button
+                    [disabled]="!formStatusValue"
+                    type="submit"
+                    class="btn btn-dark col-sm-2 form-validate-button form-button">Valider</button>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+
+    <!-- Table -->
+
+    <div class="mat-elevation-z8">
+        <table mat-table="mat-table" [dataSource]="dataSource">
+
+            <!-- Id -->
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    ID
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.id}}
+                </td>
+            </ng-container>
+
+            <!-- Start date -->
+
+            <ng-container matColumnDef="startDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Date de début
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.startDate | date:'longDate'}}
+                </td>
+            </ng-container>
+
+            <!-- End date -->
+
+            <ng-container matColumnDef="endDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Date de fin
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.endDate | date:'longDate'}}
+                </td>
+            </ng-container>
+
+            <!-- Payment Type -->
+
+            <ng-container matColumnDef="paymentType">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Type de paiement
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.paymentType}}
+                </td>
+            </ng-container>
+
+            <!-- Payment Date -->
+
+            <ng-container matColumnDef="paymentDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Date de paiement
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.paymentDate}}
+                </td>
+            </ng-container>
+
+            <!-- Edit payment-->
+
+            <ng-container matColumnDef="details">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Détails
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    <button
+                        class="btnTenantGrid"
+                        mat-mini-fab="mat-mini-fab"
+                        color="primary"
+                        aria-label="see"
+                        (click)="btnSeePaymentDetail(payment)">
+                        <mat-icon>
+                            <span class="material-icons">visibility</span>
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Delete payment-->
+
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Supprimer
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    <button
+                        class="btnTenantGrid"
+                        mat-mini-fab="mat-mini-fab"
+                        color="primary"
+                        aria-label="delete"
+                        (click)="btnDeletePayment(payment.id)">
+                        <mat-icon>
+                            <span class="material-icons">delete_forever</span>
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
