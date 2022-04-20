@@ -15,10 +15,7 @@ import {ContractDetailsComponent} from './manage-tenant/tenant-details/contract-
 import { ManageContractComponent } from './manage-contract/manage-contract.component';
 import { ContractDetComponent } from './manage-contract/contract-det/contract-det.component';
 import { ContractInfoComponent } from './manage-contract/contract-det/contract-info/contract-info.component';
-import { ContractPriceComponent } from './manage-contract/contract-det/contract-price/contract-price.component';
 import { ContractPaymentComponent } from './manage-contract/contract-det/contract-payment/contract-payment.component';
-import { ContractVehicleComponent } from './manage-contract/contract-det/contract-vehicle/contract-vehicle.component';
-import { ContractPlaceComponent } from './manage-contract/contract-det/contract-place/contract-place.component';
 import { ContractTableComponent } from './manage-contract/contract-table/contract-table.component';
 
 const routes: Routes = [
@@ -68,20 +65,8 @@ const routes: Routes = [
                 component: ContractInfoComponent
             },
             {
-                path: 'price/:contractId',
-                component: ContractPriceComponent
-            },
-            {
                 path: 'payment/:contractId',
                 component: ContractPaymentComponent
-            },
-            {
-                path: 'vehicle/:contractId',
-                component: ContractVehicleComponent
-            },
-            {
-                path: 'place/:contractId',
-                component: ContractPlaceComponent
             }
         ]
     },

@@ -6,3 +6,4 @@ export const httpOptions = {
       'Access-Control-Allow-Origin':  'http://localhost:8080/'
     })
   };
+

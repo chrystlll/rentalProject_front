@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contract } from '../_models/contract.model';
@@ -15,7 +15,6 @@ export class ContractServService {
   getByUrl ='http://localhost:8080/api/v1/contract/get/';
 
   constructor(private http : HttpClient) { }
-
 
   getContractsByMainTenantId(tenantId: any):Observable<Contract[]> {
     return this.http.get<any>(this.getByUrl+ "mainTenant/" + tenantId);

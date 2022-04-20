@@ -5,11 +5,11 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Contract } from 'src/app/_models/contract.model';
-import { ContractType } from 'src/app/_models/contractType.model';
+import { EnumType } from 'src/app/_models/enumType.model';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
-import { ContractTypeServService } from 'src/app/_services/contract-type-serv.service';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import { EnumTypeServService } from 'src/app/_services/enum-serv.service';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 
 @Component({
@@ -28,8 +28,10 @@ contract: Contract = new Contract;
 mT: MainTenant = new MainTenant();
 
 
-isMandatory = constErrorMessage.isMandatory;
-contractTypes: ContractType[] =[];
+isMandatory = constMessage.isMandatory;
+contractTypes: EnumType[] =[];
+scheduledPaymentTypes: EnumType[] =[];
+initialDurationTypes: EnumType[] = [];
 
 /* Manage the form validity*/
 /* convenience getter for easy access
@@ -53,12 +55,18 @@ contractTypes: ContractType[] =[];
 date:Date = new Date();
 public dataSource: any = [];
 
-constructor(private contractService : ContractServService, private contractTypeService : ContractTypeServService, private route : ActivatedRoute,private datePipe: DatePipe) {
+constructor(private contractService : ContractServService, private enumTypeService : EnumTypeServService, private route : ActivatedRoute,private datePipe: DatePipe) {
   const routeParams = this.route.snapshot.paramMap;
   this.tenantIdFromRoute = Number(routeParams.get('tenantId'));
   this.getArray();
-  this.contractTypeService.getContractTypes().subscribe((response) => {
+  this.enumTypeService.getContractTypes().subscribe((response) => {
     this.contractTypes =response;
+  });
+  this.enumTypeService.getScheduledPaymentTypes().subscribe((response) => {
+    this.scheduledPaymentTypes =response;
+  });
+  this.enumTypeService.getDurationTypes().subscribe((response) => {
+    this.initialDurationTypes =response;
   });
   
 }
@@ -95,7 +103,10 @@ initForm() {
         startDate: new FormControl('',Validators.required), 
         endDate: new FormControl, 
         contractType: new FormControl('LOGEMENT',Validators.required),
-        commonStatus: new FormControl('ACTIF',Validators.required)
+        commonStatus: new FormControl('ACTIF',Validators.required),
+        scheduledPaymentType: new FormControl('ANNUEL',Validators.required),
+        initialDurationType:new FormControl('MOIS',Validators.required),
+        initialAmount : new FormControl('',Validators.required),
       })
 }
 
@@ -120,7 +131,9 @@ contractFormSubmit(){
         .controls['contractType']
         .value;
     this.contract.commonStatus = this.newContractForm.controls['commonStatus'].value;
-    
+    this.contract.scheduledPaymentType = this.newContractForm.controls['scheduledPaymentType'].value;
+    this.contract.initialAmount = this.newContractForm.controls['initialAmount'].value;
+    this.contract.initialDurationType = this.newContractForm.controls['initialDurationType'].value;
     this.mT.id = this.tenantIdFromRoute;
 
     this
@@ -130,22 +143,20 @@ contractFormSubmit(){
             this.getArray();
             this.activateEditForm = false;
             this.ngOnInit();
-            alert(constErrorMessage.contractSaved);
+            alert(constMessage.contractSaved);
         }, (error) => {
-            alert(constErrorMessage.saveImpossible);
+            alert(constMessage.saveImpossible);
         });
     }else{
-        alert(constErrorMessage.saveIncomplete);
+        alert(constMessage.saveIncomplete);
     }
 
 }  
-   
 
   /** Manage the table filter */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
   }
 
   /** Insert into the form the contract values */
@@ -155,7 +166,10 @@ contractFormSubmit(){
       this.newContractForm.controls['endDate'].setValue(this.datePipe.transform(contract.endDate, 'yyyy-MM-dd'));
       this.newContractForm.controls['contractType'].setValue(contract.contractType);
       this.newContractForm.controls['id'].setValue(contract.id);
-      this.newContractForm.controls['commonStatus'].setValue(contract.commonStatus)
+      this.newContractForm.controls['commonStatus'].setValue(contract.commonStatus);
+      this.newContractForm.controls['scheduledPaymentType'].setValue(contract.scheduledPaymentType);
+      this.newContractForm.controls['initialAmount'].setValue(contract.initialAmount);
+      this.newContractForm.controls['initialDurationType'].setValue(contract.initialDurationType);
   }
 
   /** Delete the current contract by Id */
@@ -164,11 +178,11 @@ contractFormSubmit(){
     .contractService
     .deleteContract(id)
     .subscribe((response) => {
-        alert(constErrorMessage.contractDeleted);
+        alert(constMessage.contractDeleted);
         this.ngOnInit();
         this.getArray();
     }, (error) => {
-        alert(constErrorMessage.saveImpossible);
+        alert(constMessage.saveImpossible);
     })
   }
   

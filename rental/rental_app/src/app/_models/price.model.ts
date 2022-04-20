@@ -4,6 +4,5 @@ export class Price {
 	endDate?: Date;  
 	amount?: number;  
 	currency?: string;
-	durationType?:string;
-	durationValue?:number;     
+	durationType?:string; 
 } 

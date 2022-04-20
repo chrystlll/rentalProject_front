@@ -6,7 +6,7 @@ import { Contract } from 'src/app/_models/contract.model';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { ContractServService } from 'src/app/_services/contract-serv.service';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 @Component({
   selector: 'app-contract-table',
@@ -18,6 +18,7 @@ export class ContractTableComponent implements OnInit {
     @ViewChild(MatPaginator)paginator: MatPaginator | any;
 
     public displayedColumns = [
+        
         '',
         '',
         '',
@@ -101,11 +102,11 @@ export class ContractTableComponent implements OnInit {
             .contractService
             .deleteContract(id)
             .subscribe((response) => {
-                alert(constErrorMessage.contractDeleted);
+                alert(constMessage.contractDeleted);
                 this.ngOnInit();
                 this.getArray();
             }, (error) => {
-                alert(constErrorMessage.saveImpossible);
+                alert(constMessage.saveImpossible);
             })
     }
     public handlePage(e : any) {

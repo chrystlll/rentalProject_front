@@ -15,3 +15,4 @@ export const adressDeleted = 'Adresse supprimée';
 export const emailStillExist = 'L\'email existe déjà';
 export const saveApiError = 'Sauvegarde Impossible!! Echec connexion API. Veuillez réessayer ultérieurement';
 export const dateInfError = 'Les dates saisies sont incorrectes.';
+export const paymentDeleted = 'Le paiement a bien été supprimé';

@@ -1,106 +1,124 @@
-<div class="formDetailsTitle">Informations générales</div>
 
-<form [formGroup]="newContractForm" (submit)="contractFormSubmit()">
+<br/>
 
-    <div class="form-group row form-row">
-        <label class="col-sm-4 col-form-label">Id</label>
-        <div class="col-sm-8">
-            <input
-                [readonly]="true"
-                formControlName="id"
-                type="text"
-                class="form-control"/>
+<div class="container">
+    <div class="row">
+        <!-- Contract information -->
+        <div class="col-sm-6 formStandardDark">
+            <div class="formDetailsTitle">Information du contrat</div>
+            <form [formGroup]="newContractForm" (submit)="contractFormSubmit()">
+
+                <div class="form-group row form-row">
+                    <label class="col-sm-4 col-form-label">Id</label>
+                    <div class="col-sm-8">
+                        <input [readonly]="true" formControlName="id" type="text" class="form-control"/>
+                    </div>
+                </div>
+
+                <!-- Start Date => mandatory-->
+
+                <div class="form-group row form-row">
+                    <label class="formMandatoryLabel col-sm-4 col-form-label">* Date de début</label>
+                    <div class="col-sm-8">
+                        <input
+                            [readonly]="!editableStatus"
+                            formControlName="startDate"
+                            type="date"
+                            class="form-control"/>
+                    </div>
+                    <span class="formSpan" *ngIf="!form['startDate'].value">
+                        {{isMandatory}}
+                    </span>
+                </div>
+
+                <!-- End Date -->
+
+                <div class="form-group row form-row">
+                    <label class="col-sm-4 col-form-label">Date de fin</label>
+                    <div class="col-sm-8">
+                        <input
+                            [readonly]="!editableStatus"
+                            formControlName="endDate"
+                            type="date"
+                            class="form-control"/>
+                    </div>
+                </div>
+
+                <!-- Start Contract Type => mandatory-->
+
+                <div class="form-group row form-row">
+                    <label class="formMandatoryLabel col-sm-4 col-form-label">* Type de contrat</label>
+                    <div *ngIf="editableStatus" class="col-sm-8">
+                        <select class="form-control" formControlName="contractType">
+                            <option *ngFor="let contractType of contractTypes" [ngValue]="contractType.id">{{contractType.name}}</option>
+                        </select>
+                        <span class="formSpan" *ngIf="!form['contractType'].value">
+                            {{isMandatory}}
+                        </span>
+                    </div>
+                    <div *ngIf="!editableStatus" class="col-sm-8">
+                        <input
+                            [readonly]="!editableStatus"
+                            formControlName="contractType"
+                            type="text"
+                            class="form-control"/>
+                    </div>
+                </div>
+
+                <!-- Statut => mandatory-->
+
+                <div class="form-group row form-row">
+                    <label class="formMandatoryLabel col-sm-4 col-form-label">* Statut</label>
+                    <div *ngIf="editableStatus" class="col-sm-8">
+                        <select class="formSelect" formControlName="commonStatus">
+                            <option value="ACTIF">ACTIF</option>
+                            <option value="INACTIF">INACTIF</option>
+                        </select>
+                        <span class="formSpan" *ngIf="!form['commonStatus'].value">
+                            {{isMandatory}}
+                        </span>
+                    </div>
+                    <div *ngIf="!editableStatus" class="col-sm-8">
+                        <input
+                            [readonly]="!editableStatus"
+                            formControlName="commonStatus"
+                            type="text"
+                            class="form-control"/>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row justify-content-center">
+                    <button
+                        *ngIf="!editableStatus"
+                        class="btn btn-dark col-sm-2 form-button"
+                        (click)="editableStatus = true">Editer</button>
+                    <button
+                        class="btn btn-dark col-sm-2 form-button"
+                        *ngIf="editableStatus"
+                        (click)="editableStatus = false">Annuler</button>
+                    <button
+                        type="submit"
+                        class="btn btn-dark col-sm-2 form-validate-button form-button"
+                        *ngIf="editableStatus">Valider</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm-6 formStandardDark">
+            <div class="formDetailsTitle">Notes importantes</div>
         </div>
     </div>
-
-    <!-- Start Date => mandatory-->
-
-    <div class="form-group row form-row">
-        <label class="formMandatoryLabel col-sm-4 col-form-label">* Date de début</label>
-        <div class="col-sm-8">
-            <input
-                [readonly]="!editableStatus"
-                formControlName="startDate"
-                type="date"
-                class="form-control"/>
-        </div>
-        <span class="formSpan" *ngIf="!form['startDate'].value">
-            {{isMandatory}}
-        </span>
-    </div>
-
-
-    <!-- End Date -->
-    
-    <div class="form-group row form-row">
-        <label class="col-sm-4 col-form-label">Date de fin</label>
-        <div class="col-sm-8">
-            <input
-                [readonly]="!editableStatus"
-                formControlName="endDate"
-                type="date"
-                class="form-control"/>
-        </div>
-    </div>
-
-
-    <!-- Start Contract Type => mandatory-->
-
-    <div class="form-group row form-row">
-        <label class="formMandatoryLabel col-sm-4 col-form-label">* Type de contrat</label>
-        <div *ngIf="editableStatus" class="col-sm-8">
-            <select class="form-control" formControlName="contractType">
-                <option *ngFor="let contractType of contractTypes" [ngValue]="contractType.id">{{contractType.name}}</option>
-            </select>
-            <span class="formSpan" *ngIf="!form['contractType'].value">
-                {{isMandatory}}
-            </span>
-        </div>
-        <div *ngIf="!editableStatus" class="col-sm-8">
-            <input
-                [readonly]="!editableStatus"
-                formControlName="contractType"
-                type="text"
-                class="form-control"/>
-        </div>
-    </div>
-    
-    <!-- Statut => mandatory-->
-
-    <div  class="form-group row form-row">
-        <label class="formMandatoryLabel col-sm-4 col-form-label">* Statut</label>
-        <div *ngIf="editableStatus" class="col-sm-8">
-            <select class="formSelect" formControlName="commonStatus">
-                <option value="ACTIF">ACTIF</option>
-                <option value="INACTIF">INACTIF</option>
-            </select>
-            <span class="formSpan" *ngIf="!form['commonStatus'].value">
-                {{isMandatory}}
-            </span>
-        </div>
-        <div *ngIf="!editableStatus" class="col-sm-8">
-            <input
-                [readonly]="!editableStatus"
-                formControlName="commonStatus"
-                type="text"
-                class="form-control"/>
-        </div>
-    </div>
-
     <br/>
-        <div class="row justify-content-center">
-            <button
-                *ngIf="!editableStatus"
-                class="btn btn-dark col-sm-2 form-button"
-                (click)="editableStatus = true">Editer</button>
-            <button
-                class="btn btn-dark col-sm-2 form-button"
-                *ngIf="editableStatus"
-                (click)="editableStatus = false">Annuler</button>
-            <button
-                type="submit"
-                class="btn btn-dark col-sm-2 form-validate-button form-button"
-                *ngIf="editableStatus">Valider</button>
+    <div class="row">
+        <div class="col-sm-6 formStandardDark">
+            <div class="formDetailsTitle">Bien associé</div>
+            <div *ngIf="place==null">Pas de lieu associé</div>
         </div>
+        <div class="col-sm-6 formStandardDark">
+            <div class="formDetailsTitle">Véhicules associés</div>
+            <div *ngIf="vehicles==null">Pas de véhicule associé</div>
+        </div>
+    </div>
 
-    </form>
+</div>

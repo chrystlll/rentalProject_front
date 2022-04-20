@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute } from '@angular/router';
 import { MainTenant } from 'src/app/_models/main-tenant.model';
 import { MainTenantServService } from 'src/app/_services/main-tenant-serv.service';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 @Component({
   selector: 'app-main-tenant-details',
@@ -25,11 +25,11 @@ export class MainTenantDetailsComponent implements OnInit {
   formStatus: boolean = false;
   
   // Errors on MainTenant section (left)
-  isMandatory = constErrorMessage.isMandatory;
-  isValidEmail = constErrorMessage.isValidEmail;
-  isValidPhone = constErrorMessage.isValidPhone;
-  isValidSocialNumber = constErrorMessage.isValidSocialNumber;
-  isValidDate = constErrorMessage.isValidDate;
+  isMandatory = constMessage.isMandatory;
+  isValidEmail = constMessage.isValidEmail;
+  isValidPhone = constMessage.isValidPhone;
+  isValidSocialNumber = constMessage.isValidSocialNumber;
+  isValidDate = constMessage.isValidDate;
 
 
   constructor(private route : ActivatedRoute,
@@ -190,13 +190,13 @@ export class MainTenantDetailsComponent implements OnInit {
                   .maintenantService
                   .updateMainTenant(this.mainTenant)
                   .subscribe((response) => {
-                      alert(constErrorMessage.dataSaved);
+                      alert(constMessage.dataSaved);
                       this.editableStatus = false;
                   }, (error) => {
-                      alert(constErrorMessage.saveImpossible);
+                      alert(constMessage.saveImpossible);
                   });
           } else {
-              alert(constErrorMessage.saveInfoIncorrect);
+              alert(constMessage.saveInfoIncorrect);
           }
       }
 

@@ -1,10 +1,11 @@
-<div class="formDetailsTitle">Historique des paiements</div>
+<div class="formDetailsTitle" *ngIf="!isInactivePayment">Paiements en cours</div>
+<div class="formDetailsTitle" *ngIf="isInactivePayment">Historiques des paiements</div>
 
 <div class="container">
 
     <!-- Button -->
 
-    <div class="row justify-content-between">
+    <div class="row justify-content-between" *ngIf="!isInactivePayment">
         <div class="col-2">
             <button
                 class="btnAdd"
@@ -12,113 +13,27 @@
                 mat-flat-button="mat-flat-button"
                 color="accent">
                 <i class="bi bi-plus-square-fill"></i>
-                Ajouter un montant
+                Ajouter un paiement
             </button>
         </div>
-    </div>
-    <br/>
-
-    <!-- Form -->
-
-    <div class="mainTenantForms" *ngIf="activateEditForm">
-        <div class="btnClose row justify-content-end">
-            <button type="button" class="btn-close" aria-label="Close" (click)="btnClose()"></button>
-
+        <div class="col-2">
+            <button
+                class="btnAdd"
+                (click)='btnSeeOldPayment()'
+                mat-flat-button="mat-flat-button"
+                color="accent">
+                <i class="bi bi-eye-fill"></i>
+                Voir l'historique
+            </button>
         </div>
-        <form [formGroup]="newPaymentForm" (submit)="paymentFormSubmit()">
-            <div class="row">
-
-                <!-- ID-->
-
-                <div class="col-6">
-                    <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label">Id</label>
-                        <div class="col-sm-8">
-                            <input formControlName="id" type="text" class="form-control"/>
-                        </div>
-                    </div>
-
-                    <!-- Date de début-->
-
-                    <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de début</label>
-                        <div class="col-sm-8">
-                            <input formControlName="startDate" type="date" class="form-control"/>
-                            <span class="formSpan" *ngIf="!form['startDate'].value">
-                                {{isMandatory}}
-                            </span>
-                            <span
-                                class="formSpan"
-                                *ngIf="(form['startDate'].value > form['endDate'].value) && (form['endDate'].value)">
-                                {{dateInfError}}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- End Date-->
-
-                    <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label">Date de fin</label>
-                        <div class="col-sm-8">
-                            <input formControlName="endDate" type="date" class="form-control"/>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-6">
-
-                    <!-- Payment Date -->
-
-                    <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de paiement</label>
-                        <div class="col-sm-8">
-                            <input formControlName="paymentDate" type="date" class="form-control"/>
-                        </div>
-                        <span class="formSpan" *ngIf="!form['paymentDate'].value">
-                            {{isMandatory}}
-                        </span>
-                    </div>
-
-                    <!-- Payment Type -->
-
-                    <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Type de paiement
-                        </label>
-                        <div class="col-sm-8">
-                            <select class="formSelect" formControlName="paymentType">
-                                <option value="ESPECE">ESPECE</option>
-                                <option value="CHEQUE">CHEQUE</option>
-                                <option value="CB">CB</option>
-                                <option value="VIREMENT">VIREMENT</option>
-                            </select>
-                        </div>
-                        <span class="formSpan" *ngIf="!form['paymentType'].value">
-                            {{isMandatory}}
-                        </span>
-                    </div>
-                    
-
-                </div>
-            </div>
-            <br/>
-            <div class="row justify-content-center">
-                <button
-                    [disabled]="!formStatusValue"
-                    type="submit"
-                    class="btn btn-dark col-sm-2 form-validate-button form-button">Valider</button>
-            </div>
-        </form>
     </div>
 
     <br/>
 
     <!-- Table -->
-
     <div class="mat-elevation-z8">
         <table mat-table="mat-table" [dataSource]="dataSource">
-
             <!-- Id -->
-
             <ng-container matColumnDef="id">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     ID
@@ -128,11 +43,44 @@
                 </td>
             </ng-container>
 
+            <!-- Payment generation date -->
+
+            <ng-container matColumnDef="scheduledPaymentGenerationDate">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Date d'émission
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.scheduledPaymentGenerationDate | date:'longDate'}}
+                </td>
+            </ng-container>
+
+            <!-- Amount -->
+
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Montant
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.amount}}
+                </td>
+            </ng-container>
+
+            <!-- Currency -->
+
+            <ng-container matColumnDef="currency">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Devise
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.currency}}
+                </td>
+            </ng-container>
+
             <!-- Start date -->
 
             <ng-container matColumnDef="startDate">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
-                    Date de début
+                    Période de début
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let payment">
                     {{payment.startDate | date:'longDate'}}
@@ -143,7 +91,7 @@
 
             <ng-container matColumnDef="endDate">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
-                    Date de fin
+                    Période de fin
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let payment">
                     {{payment.endDate | date:'longDate'}}
@@ -168,7 +116,7 @@
                     Date de paiement
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let payment">
-                    {{payment.paymentDate}}
+                    {{payment.paymentDate | date:'longDate'}}
                 </td>
             </ng-container>
 
@@ -214,5 +162,207 @@
             <tr mat-header-row="mat-header-row" *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row="mat-row" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+    </div>
+
+    <br/>
+
+    
+
+    <div class="row paymentInfoSection justify-content-between" *ngIf="!isInactivePayment">
+        
+        <!-- Form Payment-->
+
+        <div class="contractPaymentForms col-sm-7" *ngIf="activateEditForm">
+            <div class="btnClose row justify-content-end">
+                <button type="button" class="btn-close" aria-label="Close" (click)="btnClose()"></button>
+            </div>
+            <form [formGroup]="newPaymentForm" (submit)="paymentFormSubmit()">
+                <div class="row">
+
+                    <div class="col-6">
+                        <!-- ID-->
+                        <div class="form-group row form-row" *ngIf="false">
+                            <label class="col-sm-4 col-form-label">Id</label>
+                            <div class="col-sm-8">
+                                <input formControlName="id" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <!-- Generation Date-->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de génération</label>
+                            <div class="col-sm-8">
+                                <input
+                                    formControlName="scheduledPaymentGenerationDate"
+                                    type="date"
+                                    class="form-control"/>
+                            </div>
+                        </div>
+
+                        <!-- Start Date-->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de début</label>
+                            <div class="col-sm-8">
+                                <input
+                                    formControlName="startDate"
+                                    type="date"
+                                    class="form-control"
+                                    (change)="setEndDate($event)"/>
+                                <span class="formSpan" *ngIf="!form['startDate'].value">
+                                    {{isMandatory}}
+                                </span>
+                                <span
+                                    class="formSpan"
+                                    *ngIf="(form['startDate'].value > form['endDate'].value) && (form['endDate'].value)">
+                                    {{dateInfError}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- End Date-->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label">Date de fin</label>
+                            <div class="col-sm-8">
+                                <input
+                                    [readonly]='true'
+                                    formControlName="endDate"
+                                    type="date"
+                                    class="form-control"/>
+                            </div>
+                            <span class="formSpanInfo">
+                                CONTRAT
+                                {{contract.scheduledPaymentType}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <!-- Payment Date -->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label formMandatoryLabel">* Date de paiement</label>
+                            <div class="col-sm-8">
+                                <input formControlName="paymentDate" type="date" class="form-control"/>
+                            </div>
+                            <span class="formSpan" *ngIf="!form['paymentDate'].value">
+                                {{isMandatory}}
+                            </span>
+                        </div>
+
+                        <!-- Payment Type -->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label formMandatoryLabel">* Type de paiement
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="formSelect" formControlName="paymentType">
+                                    <option value="ESPECE">ESPECE</option>
+                                    <option value="CHEQUE">CHEQUE</option>
+                                    <option value="CB">CB</option>
+                                    <option value="VIREMENT">VIREMENT</option>
+                                </select>
+                            </div>
+                            <span class="formSpan" *ngIf="!form['paymentType'].value">
+                                {{isMandatory}}
+                            </span>
+                        </div>
+
+                        <!-- Montant??? => selectionner un prix -->
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 col-form-label formMandatoryLabel">* Montant calculé (en €)</label>
+                            <div class="col-sm-8">
+                                <input
+                                    [readonly]='true'
+                                    formControlName="amount"
+                                    type="text"
+                                    class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row justify-content-center">
+                    <button
+                        [disabled]="!formStatusValue"
+                        type="submit"
+                        class="btn btn-dark col-sm-2 form-validate-button form-button">Valider</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Information -->
+
+        <div class="formStandardDark col-sm-7 infoSection" *ngIf="!activateEditForm">
+            <div class="formDetailsTitle">Information</div>
+        </div>
+
+        <!-- Price -->
+
+        <div class="formStandardDark col-sm-5 priceSection">
+            <div class="row">
+                <div class="formDetailsTitle col-sm-10">Prix actuel</div>
+                <div class="col-sm-2">
+                   <app-dialog-price [contract]="contract" (onPriceValidated)="priceWasValidated($event)"></app-dialog-price>
+                </div>
+            </div>
+            <form [formGroup]="priceForm">
+                <div class="row">
+                    <!-- ID-->
+                    <div class="form-group row form-row" *ngIf="false">
+                        <label class="col-sm-4 col-form-label">Id</label>
+                        <div class="col-sm-8">
+                            <input formControlName="id" type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Montant</label>
+                        <div class="col-sm-8">
+                            <input
+                                [readOnly]='true'
+                                formControlName="amount"
+                                type="text"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Devise</label>
+                        <div class="col-sm-8">
+                            <input
+                                [readOnly]='true'
+                                formControlName="currency"
+                                type="text"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Type de durée</label>
+                        <div class="col-sm-8">
+                            <input
+                                [readOnly]='true'
+                                formControlName="durationType"
+                                type="text"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Date de début</label>
+                        <div class="col-sm-8">
+                            <input
+                                [readOnly]='true'
+                                formControlName="startDate"
+                                type="text"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label">Date de fin</label>
+                        <div class="col-sm-8">
+                            <input
+                                [readOnly]='true'
+                                formControlName="endDate"
+                                type="text"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

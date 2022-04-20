@@ -8,24 +8,26 @@ import * as serviceUtils from 'src/app/_utils/servicesUtils';
   providedIn: 'root'
 })
 export class PriceServService {
+  
 
   postUrl = 'http://localhost:8080/api/v1/price';
   getByUrl ='http://localhost:8080/api/v1/price/get/';
 
   constructor(private http : HttpClient) { }
 
-  getPriceByContractId(id : number){
-    return this.http.get<any>(this.getByUrl + "contractId/" + id);
-  }
+
 
   deletePriceById(id: number){
     return this.http.delete(this.postUrl + "/" + id);
   }
 
-  savePrice(price:Price, contract:Contract){   
+  getPriceByContractIdAndStatus(id:number,commonStatus:String){
+    return this.http.get<any>(this.getByUrl + "contractId/" + id + "/commonStatus/" + commonStatus);
+  }
+
+  savePrice(price: Price,contractId:Number) {
     return this.http.post(this.postUrl,JSON.stringify({
-    price: price,
-    contract: contract}),serviceUtils.httpOptions);
+      price: price,contractId: contractId}),serviceUtils.httpOptions);
   }
 
 }

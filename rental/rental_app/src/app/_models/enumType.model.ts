@@ -1,4 +1,4 @@
-export class ContractType {
+export class EnumType {
     id?:string;
     name?:string;
 }

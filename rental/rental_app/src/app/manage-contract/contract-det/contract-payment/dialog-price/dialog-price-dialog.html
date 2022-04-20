@@ -1,0 +1,56 @@
+<div class="formDetailsTitle col-sm-12 justify-content-center">Modifier le prix actuel</div>
+<form [formGroup]="priceForm">
+
+    <div class="row">
+        <!-- ID-->
+        <div class="form-group row form-row" *ngIf="false">
+            <label class="col-sm-4 col-form-label">Id</label>
+            <div class="col-sm-8">
+                <input formControlName="id" type="text" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row form-row">
+            <label class="col-sm-4 col-form-label">Montant</label>
+            <div class="col-sm-8">
+                <input formControlName="amount" type="number" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row form-row">
+            <label class="col-sm-4 col-form-label">Devise</label>
+            <div class="col-sm-8">  
+              <select class="formSelect" formControlName="currency">
+                  <option value="€">€</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group row form-row">
+            <label class="col-sm-4 col-form-label">Type de durée</label>
+            <div class="col-sm-8">
+              <select  class="form-control" formControlName="durationType">
+                <option 
+                    *ngFor="let durationType of durationTypes"
+                    [ngValue]="durationType.id">{{durationType.name}}</option>
+            </select>
+           </div>
+        </div>
+        <div class="form-group row form-row">
+            <label class="col-sm-4 col-form-label">Date de début</label>
+            <div class="col-sm-8">
+                <input formControlName="startDate" type="date" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row form-row">
+            <label class="col-sm-4 col-form-label">Date de fin</label>
+            <div class="col-sm-8">
+                <input formControlName="endDate" type="date" class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions="mat-dialog-actions" class="justify-content-center">
+        <button  (click)="priceFormSubmit()" type="submit" mat-raised-button="mat-raised-button" color="primary">Sauvegarder</button>
+        <button
+            mat-button="mat-button"
+            class="mat-focus-indicator mat-raised-button mat-button-base mat-raised"
+            (click)="onNoClick()">Annuler</button>
+    </div>
+</form>

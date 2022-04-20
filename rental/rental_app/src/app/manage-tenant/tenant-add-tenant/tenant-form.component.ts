@@ -3,7 +3,7 @@ import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {MainTenantServService} from 'src/app/_services/main-tenant-serv.service'
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms'
 import {Router} from '@angular/router';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 @Component(
     {selector: 'app-tenant-form', templateUrl: './tenant-form.component.html', styleUrls: ['./tenant-form.component.css']}
@@ -23,11 +23,11 @@ export class TenantFormComponent implements OnInit {
 
     
     // Errors
-    isMandatory = constErrorMessage.isMandatory;
-    isValidEmail = constErrorMessage.isValidEmail
-    isValidPhone = constErrorMessage.isValidPhone
-    isValidSocialNumber = constErrorMessage.isValidSocialNumber
-    isValidDate = constErrorMessage.isValidDate;
+    isMandatory = constMessage.isMandatory;
+    isValidEmail = constMessage.isValidEmail
+    isValidPhone = constMessage.isValidPhone
+    isValidSocialNumber = constMessage.isValidSocialNumber
+    isValidDate = constMessage.isValidDate;
     
     constructor(
         private mainTenantServ : MainTenantServService,
@@ -128,12 +128,13 @@ export class TenantFormComponent implements OnInit {
         };
         this.mT.commonStatus = "ACTIF";
         
-
+        console.log(this
+            .mT);
         if (this.formStatusValue) {
 
             // search if mainTenant exists with the email else create
 
-            this
+          /**   this
                 .mainTenantServ
                 .getMainTenantByEmail(this
                   .newMainTenantForm
@@ -141,34 +142,34 @@ export class TenantFormComponent implements OnInit {
                       ?.value)
                 .subscribe((result:any|boolean) => {
                     this.isExist = result;
-                    if (false === this.isExist) {
+                    if (false === this.isExist) { */
                         this.mainTenantServ.saveMainTenant(this.mT).subscribe(result => {
-                                alert(constErrorMessage.dataSaved);
+                                alert(constMessage.dataSaved);
                                 this.router.navigate(['/', 'tenant']);
                             }, error => {
                                 console.error('There was an error!', error.status);
                                 switch (error.status) {
                                     case 0:
                                         {
-                                            alert(constErrorMessage.saveApiError);
+                                            alert(constMessage.saveApiError);
                                             break;
                                         }
                                     default:
                                         {
-                                            alert(constErrorMessage.saveImpossible);
+                                            alert(constMessage.saveImpossible);
                                             break;
                                         }
                                 }
                             });
                     } else {
-                            alert(constErrorMessage.emailStillExist); 
+                            alert(constMessage.emailStillExist); 
                     }
-                }, error => {
+                }/*, error => {
                   alert(
-                    constErrorMessage.saveImpossible
+                    constMessage.saveImpossible
                 );})               
         }else {
-          alert(constErrorMessage.saveInfoIncorrect);
+          alert(constMessage.saveInfoIncorrect);
       }
     }
 

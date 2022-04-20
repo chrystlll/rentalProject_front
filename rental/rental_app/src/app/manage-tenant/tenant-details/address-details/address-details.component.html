@@ -105,13 +105,11 @@
             </div>
         </form>
     </div>
-
+    <br/>
     <!-- Table adress component -->
     <div>
-        <br/>
         <div class="mat-elevation-z8">
             <table mat-table="mat-table" [dataSource]="dataSource">
-
                 <ng-container matColumnDef="id">
                     <th
                         mat-header-cell="mat-header-cell"
@@ -211,7 +209,8 @@
                 [length]="totalSize"
                 [pageIndex]="currentPage"
                 (page)="handlePage($event)"
-                aria-label="Select page of tenants"></mat-paginator>
+                aria-label="Select page of tenants">
+            </mat-paginator>
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@ import {CSVCodePostalRecord} from 'src/app/_models/csv-code-postal.model';
 import {MainTenant} from 'src/app/_models/main-tenant.model';
 import {AddressServService} from 'src/app/_services/address-serv.service';
 import {ReadCSVServService} from 'src/app/_services/read-csvserv.service';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 @Component(
     {selector: 'app-address-details', templateUrl: './address-details.component.html', styleUrls: ['./address-details.component.css']}
@@ -57,7 +57,7 @@ AfterViewInit {
     private _csvURL = 'assets/document/laposte_hexasmal.csv';
     currentItem: any;
 
-    isMandatory = constErrorMessage.isMandatory;
+    isMandatory = constMessage.isMandatory;
 
     constructor(
         private route : ActivatedRoute,
@@ -197,11 +197,11 @@ AfterViewInit {
             .addressService
             .deleteAddress(id)
             .subscribe((response) => {
-                alert(constErrorMessage.adressDeleted);
+                alert(constMessage.adressDeleted);
                 this.ngOnInit();
                 this.getArray();
             }, (error) => {
-                alert(constErrorMessage.saveImpossible);
+                alert(constMessage.saveImpossible);
             })
     }
 
@@ -308,12 +308,12 @@ AfterViewInit {
                 this.getArray();
                 this.activateEditForm = false;
                 this.ngOnInit();
-                alert(constErrorMessage.dataSaved);
+                alert(constMessage.dataSaved);
             }, (error) => {
-                alert(constErrorMessage.saveImpossible);
+                alert(constMessage.saveImpossible);
             });
         }else{
-            alert(constErrorMessage.saveIncomplete);
+            alert(constMessage.saveIncomplete);
         }
     }
 

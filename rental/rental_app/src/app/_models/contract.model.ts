@@ -5,4 +5,7 @@ export class Contract {
     contractType?:string;
     commonStatus?:string;
     mainTenantfirstName?:string;
+    scheduledPaymentType?:string;
+    initialDurationType?:string;
+    initialAmount?:number;
 }

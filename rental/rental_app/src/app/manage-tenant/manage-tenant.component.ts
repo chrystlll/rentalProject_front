@@ -5,7 +5,7 @@ import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
-import * as constErrorMessage from 'src/app/_utils/constErrorMessage';
+import * as constMessage from 'src/app/_utils/constMessage';
 
 @Component(
     {selector: 'app-manage-tenant', templateUrl: './manage-tenant.component.html', styleUrls: ['./manage-tenant.component.css']}
@@ -95,7 +95,7 @@ AfterViewInit {
             .mainTenantServ
             .deleteMainTenantById(id)
             .subscribe((result) => {
-                alert(constErrorMessage.mainTenantDeleted);
+                alert(constMessage.mainTenantDeleted);
                 this.dataSource = this
                     .dataSource
                     .filter((item : {
@@ -104,7 +104,7 @@ AfterViewInit {
                 this.getArray();
                 this.ngOnInit();
             }, (error) => {
-                alert(constErrorMessage.saveImpossible);
+                alert(constMessage.saveImpossible);
             });
     }
 

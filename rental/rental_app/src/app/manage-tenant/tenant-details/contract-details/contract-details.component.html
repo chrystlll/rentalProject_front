@@ -46,8 +46,36 @@
                             <input formControlName="endDate" type="date" class="form-control"/>
                         </div>
                     </div>
+                    <!-- Not editable if id = null -->
                     <div class="form-group row form-row">
-                        <label class="col-sm-4 col-form-label">* Statut du contrat</label>
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Montant initial</label>
+                        <div class="col-sm-8 row">
+                            <div class="col-sm-5">
+                                <input [readonly]="form['id'].value" formControlName="initialAmount" type="text" class="form-control"/>
+                            </div>
+                            <div class="col-sm-2">€ /
+                            </div>
+                            <div class="col-sm-5" >
+                                <select *ngIf="!form['id'].value" class="form-control" formControlName="initialDurationType">
+                                    <option 
+                                        *ngFor="let initialDurationType of initialDurationTypes"
+                                        [ngValue]="initialDurationType.id">{{initialDurationType.name}}</option>
+                                </select>
+                                <input [hidden]="!form['id'].value" [readonly]="form['id'].value" formControlName="initialDurationType" type="text" class="form-control"/>
+                            </div>
+                            <span
+                                class="formSpan"
+                                *ngIf="!form['initialDurationType'].value || !form['initialAmount'].value ">
+                                {{isMandatory}}
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Statut du contrat</label>
                         <div class="col-sm-8">
                             <select class="form-control" formControlName="commonStatus">
                                 <option value="ACTIF">ACTIF</option>
@@ -64,13 +92,24 @@
                             <select class="form-control" formControlName="contractType">
                                 <option *ngFor="let contractType of contractTypes" [ngValue]="contractType.id">{{contractType.name}}</option>
                             </select>
-
                             <span class="formSpan" *ngIf="!form['contractType'].value">
                                 {{isMandatory}}
                             </span>
                         </div>
                     </div>
-
+                    <div class="form-group row form-row">
+                        <label class="col-sm-4 col-form-label formMandatoryLabel">* Type de paiement</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" formControlName="scheduledPaymentType">
+                                <option
+                                    *ngFor="let scheduledPaymentType of scheduledPaymentTypes"
+                                    [ngValue]="scheduledPaymentType.id">{{scheduledPaymentType.name}}</option>
+                            </select>
+                            <span class="formSpan" *ngIf="!form['scheduledPaymentType'].value">
+                                {{isMandatory}}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br/>
@@ -85,7 +124,7 @@
 
     <br/>
 
-    <!-- Table form component -->
+    <!-- Table component -->
 
     <div class="row justify-content-end">
         <mat-form-field appearance="legacy" class="col-3">
@@ -105,9 +144,7 @@
 
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <th
-                    mat-header-cell
-                    *matHeaderCellDef >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     ID
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -117,9 +154,7 @@
 
             <!-- Start Date Column -->
             <ng-container matColumnDef="startDate">
-                <th
-                    mat-header-cell 
-                    *matHeaderCellDef  >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Date de début
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -129,9 +164,7 @@
 
             <!-- End Date Column -->
             <ng-container matColumnDef="endDate">
-                <th
-                    mat-header-cell 
-                    *matHeaderCellDef >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Date de fin
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -141,9 +174,7 @@
 
             <!-- Contract Type Column -->
             <ng-container matColumnDef="contractType">
-                <th
-                    mat-header-cell 
-                    *matHeaderCellDef  >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Type de contrat
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -153,9 +184,7 @@
 
             <!-- Contract Status Column -->
             <ng-container matColumnDef="commonStatus">
-                <th
-                    mat-header-cell 
-                    *matHeaderCellDef  >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Statut du contrat
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -165,7 +194,7 @@
 
             <!-- See Column -->
             <ng-container matColumnDef="details">
-                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Détails
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -184,7 +213,7 @@
 
             <!-- Delete Column -->
             <ng-container matColumnDef="delete">
-                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
                     Supprimer
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let dataSource">
@@ -201,7 +230,6 @@
                 </td>
             </ng-container>
 
-
             <tr mat-header-row="mat-header-row" *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row="mat-row" *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -209,6 +237,7 @@
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">Aucune donnée trouvée pour "{{input.value}}"</td>
             </tr>
+
         </table>
     </div>
 </div>

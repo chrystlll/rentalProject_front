@@ -1,3 +1,19 @@
 table{
     width: 100%;
 }
+
+.contractPaymentForms{
+    border: solid #424242 1px;
+    padding: 10px;
+}
+
+
+
+.paymentInfoSection{
+    margin: 0
+}
+
+.infoSection{
+    padding-right: 10px;
+    border-right-style: 10px,#fff;
+}
