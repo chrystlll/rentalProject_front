@@ -1,0 +1,21 @@
+<div class="container-fluid">
+
+    <div class="row align-items-start">
+        
+        <div class="navLeft text-white col-3">
+            <hr>
+            <ul class="nav nav-pills flex-column">
+              <li>
+                <a class="nav-link text-white" [routerLink]="['placeInfo', placeIdFromRoute]" >
+                  <i class="bi bi-info-circle"></i>
+                  Informations générales
+                </a>
+              </li>
+            </ul>
+            <hr>
+          </div>
+          <div class="b-example-divider col-1"></div>          
+        <div class="col-8 detailsSection">
+            <router-outlet></router-outlet></div>
+    </div>
+</div>

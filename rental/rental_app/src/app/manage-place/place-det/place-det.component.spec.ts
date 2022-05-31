@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContractInactiveComponent } from './contract-inactive.component';
+import { PlaceDetComponent } from './place-det.component';
 
-describe('ContractInactiveComponent', () => {
-  let component: ContractInactiveComponent;
-  let fixture: ComponentFixture<ContractInactiveComponent>;
+describe('PlaceDetComponent', () => {
+  let component: PlaceDetComponent;
+  let fixture: ComponentFixture<PlaceDetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContractInactiveComponent ]
+      declarations: [ PlaceDetComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContractInactiveComponent);
+    fixture = TestBed.createComponent(PlaceDetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

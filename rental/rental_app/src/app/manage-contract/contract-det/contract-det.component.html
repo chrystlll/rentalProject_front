@@ -6,15 +6,15 @@
             <hr>
             <ul class="nav nav-pills flex-column">
               <li>
-                <a class="nav-link text-white" [routerLink]="['contractInfo', contractIdFromRoute]" >
+                <a class="nav-link text-white" [routerLink]="['/contractInfo', contractIdFromRoute]" >
                   <i class="bi bi-info-circle"></i>
                   Informations générales
                 </a>
               </li>
               <li>
-                <a class="nav-link text-white" [routerLink]="['payment', contractIdFromRoute]" >
+                <a class="nav-link text-white" [routerLink]="['/payment', contractIdFromRoute]" >
                   <i class="bi bi-credit-card"></i>
-                  Paiements en cours
+                  Paiements
                 </a>
               </li>
             </ul>

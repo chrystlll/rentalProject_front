@@ -1,0 +1,81 @@
+<div class="mat-elevation-z8">
+    <table mat-table="mat-table" [dataSource]="dataSource">
+        <ng-container matColumnDef="id" >
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                ID
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                {{place.id}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Nom du bien
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                {{place.name}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="commonStatus">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Statut
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                {{place.commonStatus}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="locationSize">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Taille
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                {{place.locationSize}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="details">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Détails
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                <button
+                    class="btnTenantGrid"
+                    mat-mini-fab="mat-mini-fab"
+                    color="primary"
+                    aria-label="see"
+                    (click)="btnSeePlaceDetail(place.id)">
+                    <mat-icon>
+                        <span class="material-icons">visibility</span>
+                    </mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
+                Supprimer
+            </th>
+            <td mat-cell="mat-cell" *matCellDef="let place">
+                <button
+                    class="btnTenantGrid"
+                    mat-mini-fab="mat-mini-fab"
+                    color="primary"
+                    aria-label="delete"
+                    (click)="btnDeletePlace(place.id)">
+                    <mat-icon>
+                        <span class="material-icons">delete_forever</span>
+                    </mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row="mat-header-row" *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row="mat-row" *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator
+        #paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20]"
+        [showFirstLastButtons]="true"
+        [length]="totalSize"
+        [pageIndex]="currentPage"
+        (page)="handlePage($event)"
+        aria-label="Select page of places"></mat-paginator>
+</div>

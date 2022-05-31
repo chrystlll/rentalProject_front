@@ -53,19 +53,6 @@ export class ContractPaymentComponent implements OnInit {
         private utilsServ : UtilsServService,
         private priceServ : PriceServService
     ) {
-        this.displayedColumns = [
-            'id',
-            'scheduledPaymentGenerationDate',
-            'amount',
-            'currency',
-            'startDate',
-            'endDate',
-            'paymentType',
-            'paymentDate',
-            'details',
-            'delete'
-        ];
-
         const routeParams = this.route.snapshot.paramMap;
         this.contractIdFromRoute = Number(routeParams.get('contractId'));
         this
@@ -79,9 +66,40 @@ export class ContractPaymentComponent implements OnInit {
         this.payment = new ScheduledPayment();
     }
 
+    setDisplayColums(){
+        if(!this.isInactivePayment){
+        this.displayedColumns = [
+            'id',
+            'scheduledPaymentGenerationDate',
+            'amount',
+            'currency',
+            'startDate',
+            'endDate',
+            'paymentType',
+            'paymentDate',
+            'paymentStatus',
+            'details',
+            'delete'
+        ];}
+        else{
+            this.displayedColumns = [
+                'id',
+                'scheduledPaymentGenerationDate',
+                'amount',
+                'currency',
+                'startDate',
+                'endDate',
+                'paymentType',
+                'paymentDate',
+                'paymentStatus'
+            ]
+        }
+    }
+
     ngOnInit(): void {
         this.getArrayPayment("ACTIF");
         this.getArrayPrice();
+        this.setDisplayColums();
     }
 
     /* Manage the form validity*/
@@ -145,9 +163,10 @@ export class ContractPaymentComponent implements OnInit {
      * By status (status can be 'ACTIF' or 'INACTIVE')
     */
     private getArrayPayment(status:String) {
+        console.log(status);
         this
             .paymentService
-            .getPaymentByContractId(this.contractIdFromRoute)
+            .getPaymentByContractIdAndStatus(this.contractIdFromRoute,status)
             .subscribe((response) => {
                 this.dataSource = new MatTableDataSource<ScheduledPayment>(response);
             });
@@ -235,12 +254,14 @@ export class ContractPaymentComponent implements OnInit {
     }
 
     /** Delete the payment by id */
-    btnDeletePayment(id : number) {
+    btnCanceledPayment(payment : ScheduledPayment) {
+        payment.paymentStatus = "ANNULE";
+       console.log(payment);
         this
-            .paymentService
-            .deletePaymentById(id)
+            .paymentService.savePayment(payment,this.contract)
             .subscribe((response) => {
-                alert(constMessage.paymentDeleted)
+                alert(constMessage.paymentCanceled);
+                this.ngOnInit();
             });
     }
 
@@ -282,8 +303,14 @@ export class ContractPaymentComponent implements OnInit {
     btnSeeOldPayment() {
         this.isInactivePayment = true;
         // Init the payment array
-        this.getArrayPayment("INACTIVE");
+        this.getArrayPayment("INACTIF");
+        this.setDisplayColums();
+    }
 
+    btnSeePayment(){
+        this.ngOnInit();
+        this.isInactivePayment = false;
+        this.setDisplayColums();
     }
 
     /** Update the end date depending of the contractType */

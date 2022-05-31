@@ -22,14 +22,9 @@ export class PaymentServService {
   }
 
   savePayment(payment:ScheduledPayment, contract:Contract){   
+    console.log(payment)
     return this.http.post(this.postUrl,JSON.stringify({
       payment: payment,
     contract: contract}),serviceUtils.httpOptions);
   }
-
-
-  deletePaymentById(id: number){
-    return this.http.delete(this.postUrl + "/" + id);
-  }
-
 }

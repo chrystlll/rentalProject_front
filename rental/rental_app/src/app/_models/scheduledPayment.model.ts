@@ -7,5 +7,5 @@ export class ScheduledPayment {
 	amount: number; 
 	currency : string;
 	scheduledPaymentGenerationDate: Date;
-
+	paymentStatus:string;
 } 

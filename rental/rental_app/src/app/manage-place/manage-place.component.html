@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row justify-content-end">
+
+       <div class="col-2">
+           <button
+               class="form-validate-button"
+               (click)='btnSeeOldPlaces()'
+               mat-flat-button="mat-flat-button">
+               <i class="bi bi-eye-fill"></i>
+               Voir les biens {{oppositePlaceStatus|lowercase}}s
+           </button>
+       </div>
+   </div>
+
+   <br/>
+
+   <div class="formTitle">Liste des biens {{placeStatus}}s</div>
+   <br/> 
+   <router-outlet></router-outlet>
+</div>

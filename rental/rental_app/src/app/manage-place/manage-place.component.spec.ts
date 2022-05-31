@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagePropertiesComponent } from './manage-properties.component';
+import { ManagePlaceComponent } from './manage-place.component';
 
-describe('ManagePropertiesComponent', () => {
-  let component: ManagePropertiesComponent;
-  let fixture: ComponentFixture<ManagePropertiesComponent>;
+describe('ManagePlaceComponent', () => {
+  let component: ManagePlaceComponent;
+  let fixture: ComponentFixture<ManagePlaceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManagePropertiesComponent ]
+      declarations: [ ManagePlaceComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagePropertiesComponent);
+    fixture = TestBed.createComponent(ManagePlaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

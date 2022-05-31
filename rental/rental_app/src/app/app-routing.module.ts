@@ -17,6 +17,10 @@ import { ContractDetComponent } from './manage-contract/contract-det/contract-de
 import { ContractInfoComponent } from './manage-contract/contract-det/contract-info/contract-info.component';
 import { ContractPaymentComponent } from './manage-contract/contract-det/contract-payment/contract-payment.component';
 import { ContractTableComponent } from './manage-contract/contract-table/contract-table.component';
+import { ManagePlaceComponent } from './manage-place/manage-place.component';
+import { PlaceTableComponent } from './manage-place/place-table/place-table.component';
+import { PlaceDetComponent } from './manage-place/place-det/place-det.component';
+import { PlaceInfoComponent } from './manage-place/place-det/place-info/place-info.component';
 
 const routes: Routes = [
     // { path: '', pathMatch: 'full', redirectTo: 'login' }, { path: 'login',
@@ -57,6 +61,18 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'place',
+        component: ManagePlaceComponent,
+        children: [
+            {
+                path: 'placeTable/:placeStatus',
+                component: PlaceTableComponent
+            }
+        ]
+        
+    },
+    
+    {
         path: 'contractDet',
         component: ContractDetComponent,
         children: [
@@ -67,6 +83,16 @@ const routes: Routes = [
             {
                 path: 'payment/:contractId',
                 component: ContractPaymentComponent
+            }
+        ]
+    },
+    {
+        path: 'placeDet',
+        component: PlaceDetComponent,
+        children: [
+            {
+                path: 'placeInfo/:placeId',
+                component: PlaceInfoComponent
             }
         ]
     },

@@ -12,6 +12,7 @@ export class ManageContractComponent implements OnInit {
     contractStatus:string;
     oppositeContractStatus: string;
     typeContract:string;  
+    
     constructor(private router : Router,private route : ActivatedRoute) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
@@ -29,9 +30,7 @@ export class ManageContractComponent implements OnInit {
     /**  Check inactive contract
   */
     btnSeeOldContracts() {
-     
-      
-      this.router.navigate([ '/contract/contractTable/'+this.oppositeContractStatus]);
+      this.router.navigate(['/contract/contractTable/'+this.oppositeContractStatus]);
         
         this.ngOnInit;
         if(this.contractStatus == 'ACTIF'){

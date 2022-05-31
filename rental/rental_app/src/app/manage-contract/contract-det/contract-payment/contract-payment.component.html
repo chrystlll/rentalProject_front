@@ -28,6 +28,19 @@
         </div>
     </div>
 
+    <div class="row justify-content-end" *ngIf="isInactivePayment">
+        <div class="col-2">
+            <button
+                class="btnAdd"
+                (click)='btnSeePayment()'
+                mat-flat-button="mat-flat-button"
+                color="accent">
+                <i class="bi bi-eye-fill"></i>
+                Voir les paiements en cours
+            </button>
+        </div>
+    </div>
+
     <br/>
 
     <!-- Table -->
@@ -120,10 +133,21 @@
                 </td>
             </ng-container>
 
+            <!-- Payment Status -->
+
+            <ng-container matColumnDef="paymentStatus">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                    Statut du paiement
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let payment">
+                    {{payment.paymentStatus}}
+                </td>
+            </ng-container>
+
             <!-- Edit payment-->
 
-            <ng-container matColumnDef="details">
-                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+            <ng-container matColumnDef="details" *ngIf="!isInactivePayment">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef >
                     Détails
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let payment">
@@ -142,9 +166,9 @@
 
             <!-- Delete payment-->
 
-            <ng-container matColumnDef="delete">
+            <ng-container matColumnDef="delete" *ngIf="!isInactivePayment">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
-                    Supprimer
+                    Annuler
                 </th>
                 <td mat-cell="mat-cell" *matCellDef="let payment">
                     <button
@@ -152,9 +176,9 @@
                         mat-mini-fab="mat-mini-fab"
                         color="primary"
                         aria-label="delete"
-                        (click)="btnDeletePayment(payment.id)">
+                        (click)="btnCanceledPayment(payment)">
                         <mat-icon>
-                            <span class="material-icons">delete_forever</span>
+                            <span class="material-icons">canceled</span>
                         </mat-icon>
                     </button>
                 </td>
@@ -165,8 +189,6 @@
     </div>
 
     <br/>
-
-    
 
     <div class="row paymentInfoSection justify-content-between" *ngIf="!isInactivePayment">
         

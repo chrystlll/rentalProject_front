@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManageTenantComponent } from './manage-tenant/manage-tenant.component';
-import { ManagePropertiesComponent } from './manage-properties/manage-properties.component';
 import { HeaderComponent } from './_components/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { TenantFormComponent } from './manage-tenant/tenant-add-tenant/tenant-form.component';
@@ -39,9 +38,12 @@ import { ContractPaymentComponent } from './manage-contract/contract-det/contrac
 import { ContractTableComponent } from './manage-contract/contract-table/contract-table.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogPriceComponent, DialogPriceDialog } from './manage-contract/contract-det/contract-payment/dialog-price/dialog-price.component';
+import { ManagePlaceComponent } from './manage-place/manage-place.component';
+import { PlaceTableComponent } from './manage-place/place-table/place-table.component';
+import { PlaceDetComponent } from './manage-place/place-det/place-det.component';
+import { PlaceInfoComponent } from './manage-place/place-det/place-info/place-info.component';
 
 registerLocaleData(localeFr);
-
 
 const modules = [
   MatButtonModule,
@@ -60,6 +62,11 @@ const modules = [
 @NgModule({
 imports: [...modules],
 exports: [...modules],
+declarations: [
+  
+
+    
+  ],
 })
 export class MaterialModule {};
 
@@ -69,7 +76,6 @@ export class MaterialModule {};
   declarations: [ 
     AppComponent,
     ManageTenantComponent,
-    ManagePropertiesComponent,
     HeaderComponent,
     HomeComponent,
     TenantFormComponent,
@@ -89,7 +95,11 @@ export class MaterialModule {};
     ContractPaymentComponent,
     ContractTableComponent,
     DialogPriceComponent,
-    DialogPriceDialog
+    DialogPriceDialog,
+    ManagePlaceComponent,
+    PlaceTableComponent,
+    PlaceDetComponent,
+    PlaceInfoComponent
   ],
   imports: [ 
     MaterialModule,
